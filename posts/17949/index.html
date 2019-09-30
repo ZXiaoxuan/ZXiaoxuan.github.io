@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="运算符  操作符  c语言">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="一篇对初学者十分友好的文章。">
+<meta name="keywords" content="运算符  操作符  c语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C语言】运算符与操作符的用法全面汇总(非常有用)">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/17949/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="一篇对初学者十分友好的文章。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190309083146803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdn.net/20170326120556183?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2lnbWFfaW5m/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2019-09-18T06:51:11.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【C语言】运算符与操作符的用法全面汇总(非常有用)">
+<meta name="twitter:description" content="一篇对初学者十分友好的文章。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190309083146803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/17949/">
+
+
+
+
+
+
+
+  <title>【C语言】运算符与操作符的用法全面汇总(非常有用) | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/17949/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【C语言】运算符与操作符的用法全面汇总(非常有用)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-07T10:37:58+08:00">
+                2019-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C语言/" itemprop="url" rel="index">
+                    <span itemprop="name">C语言</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/17949/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/17949/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一篇对初学者十分友好的文章。<br> <a id="more"></a></p>
+<h2 id="一．‘-gt-’的用法"><a href="#一．‘-gt-’的用法" class="headerlink" title="一．‘-&gt;’的用法"></a><font>一．‘-&gt;’的用法</font></h2><p>“-&gt;”是一个整体，它是用于指向结构体子数据的指针，用来取子数据。换种说法，如果我们在C语言中定义了一个结构体，然后申明一个指针指向这个结构体，那么我们要用指针取出结构体中的数据，就要用到“-&gt;”。</p>
+<p><strong>p=p-&gt;next ，意思是将p指向的一个结构体实例中的子数据next赋值给p。</strong></p>
+<p><strong>-&gt;的作法就是在引用结构体中的变量！</strong><br>​​<img src="https://img-blog.csdnimg.cn/20190309083146803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>扩展资料：</strong></p>
+<p>在C语言中，结构体(struct)指的是一种数据结构，是C语言中聚合数据类型(aggregate data type)的一类。结构体可以被声明为变量、指针或数组等，用以实现较复杂的数据结构。结构体同时也是一些元素的集合，这些元素称为结构体的成员(member)，且这些成员可以为不同的类型，成员一般用名字访问。</p>
+<h2 id="二-‘-’的用法"><a href="#二-‘-’的用法" class="headerlink" title="二.‘[ ]’的用法"></a>二.‘[ ]’的用法</h2><p>数组的下标，定义数组以用于数组操作<br>比如int a[6];<br>就是定义一个一维数组,这个数组名叫做 a ,共有6个元素<br>同理int b[6][6]<br>就是定义一个二维数组,这个数组共有6*6个元素</p>
+<h2 id="三-‘-’的用法"><a href="#三-‘-’的用法" class="headerlink" title="三 ‘.’的用法"></a>三 ‘.’的用法</h2><p><strong>用在一般结构体变量中，直接调用结构体中的某个成员</strong></p>
+<p>如：  student.name</p>
+<p><strong>扩展资料：</strong></p>
+<p><font face="Times New Roman" color="orange">  <strong>成员运算符（·）和指向结构体成员运算符（-&gt;）的区别：</strong><font></font></font></p>
+<p>两者都是用来引用结构体变量的成员，但它们的应用环境是完全不一样，<strong>前者是用在一般结构体变量中，而后者是与指向结构体变量的指针连用</strong>，例如：有定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">student</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"> &#123;</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">long</span> num;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">float</span> score;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"> <span class="class"><span class="keyword">struct</span> <span class="title">student</span> <span class="title">stud</span>, *<span class="title">ptr</span>=&amp;<span class="title">stud</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p> 则<strong>stud.num、stud.score、ptr-&gt;num</strong>等都是正确的引用方式，但ptr.num、stud-&gt;num就是不允许的，其实<code>ptr-&gt;num</code>相当于(<code>*ptr).num</code>，只是为了更为直观而专门提供了这-&gt;运算符。</p>
+<p>最后指出，<strong>这两者都具有最高优先级，按自左向右的方向结合。</strong></p>
+<h2 id="四-‘！’的用法"><a href="#四-‘！’的用法" class="headerlink" title="四 ‘！’的用法"></a>四 ‘！’的用法</h2><p> <strong>！为逻辑运算符 “非”，用来改变条件的逻辑状态，如果条件为真则改变为假</strong></p>
+<p>其运算规则为，<br>1 如果a的值为0，则运算结果为1;<br>2 如果a的值非0，则运算结果为0。</p>
+<p><strong>举例：  a!=9  就是a不等于9</strong>    </p>
+<h2 id="五-‘逻辑与-amp-amp-和逻辑或-’的用法"><a href="#五-‘逻辑与-amp-amp-和逻辑或-’的用法" class="headerlink" title="五  ‘逻辑与&amp;&amp;和逻辑或||’的用法"></a>五  ‘逻辑与&amp;&amp;和逻辑或||’的用法</h2><p><code>&amp;&amp;(与)</code> 和<code>|| (或)</code>都是逻辑表达式里常用的，一般用法是 <code>if（表达式1 || 表达式2）</code> 或者 <code>if（表达式1 &amp;&amp; 表达式2）</code></p>
+<p><strong>|| 表示 或  只要有一个非0，整个表达式就为真，就满足if判定的条件<br>例如 if(1 || 0) ;<br>1为真  0为假  此判断条件为真</strong></p>
+<p><strong>&amp;&amp; 表示 且 if括号内的表达式都为真 才能满足if判定的条件 才会执行if{}里的语句</strong></p>
+<h2 id="六-自增运算符-，自减运算符–’的用法"><a href="#六-自增运算符-，自减运算符–’的用法" class="headerlink" title="六.自增运算符++，自减运算符–’的用法"></a>六.自增运算符++，自减运算符–’的用法</h2><p>如果单独写 自增运算符为一个语句，二者没有区别<br>++i; 和 i++; 都是让i+1赋值给i</p>
+<p>但是++和–在变量前后的时候，则是会有不同</p>
+<p><strong>++在前</strong><br>    例如:   ++a;<br>    说明: <strong>++在前时，b会先自加1，然后才赋值给a</strong></p>
+<pre><code>举例:   int a, b = 1;
+        a = ++b;        //b增加至2，a得到的值为2</code></pre><p>   <strong>++在后</strong><br>    例如:   a++;<br>    说明: <strong>++在后时，b赋值给a，再进行自加</strong></p>
+<p>举例:   int a, b = 1;<br>            a = b++;        //b增加至2，a得到的值为1</p>
+<p><strong>在操作数之前的操作符(++b)在变量值在被使用之前增加它的值；在操作数之后的操作符(b++)在变量值被使用之后才增加的值</strong>。</p>
+<p><strong>扩展资料：</strong></p>
+<p><font face="Times New Roman" color="#4169E1"><strong>++a 与 a++ 不能被赋值 ，因为他们本身只是</strong><font><font face="Times New Roman" color="orange"><strong>拷贝了变量的值，并不是变量本身</strong><font>，<font face="Times New Roman" color="#4169E"><strong>你无法向一个</strong><font face="Times New Roman" color="#32CD32"><strong>值</strong><font face="Times New Roman" color="orange"><strong>进行</strong><font face="Times New Roman" color="#32CD32"><strong>赋值</strong></font></font></font></font></font></font></font></font></p>
+<p>int a = 1;</p>
+<p>++a = 5;</p>
+<p>这样子是错误的！</p>
+<h2 id="七-取地址运算符-amp-和指针运算符"><a href="#七-取地址运算符-amp-和指针运算符" class="headerlink" title="七.取地址运算符 &amp;和指针运算符*"></a>七.取地址运算符 &amp;和指针运算符*</h2><p><font face="Times New Roman" color="#A020F0"><strong>取地址运算符 &amp;</strong> <font></font></font></p>
+<p>&amp; 是一元运算符，返回操作数的内存地址。例如，如果 var 是一个整型变量，则 &amp;var 是它的地址。该运算符与其他一元运算符具有相同的优先级，在运算时它是从右向左顺序进行的。</p>
+<p>您可以把 &amp; 运算符读作<strong>“取地址运算符”</strong>，这意味着，<strong>&amp;var</strong> 读作”var 的地址”。</p>
+<p><font face="Times New Roman" color="#A020F0"><strong>和指针运算符*</strong><font></font></font></p>
+<p> *  运算在C语言中，有两种作用：<br>1 用作乘法，为<strong>双目运算符</strong>，形式为a<em>b, 就是计算数学中的a乘以b。<br>2 用作取值运算，为*</em>单目运算符**，根据后续操作数(必须为指针)类型，取其指向的值。</p>
+<p>所谓的指针，本质上就是地址。 指针变量的值，就是地址的值，当取值运算时就是到对应的<strong>内存地址</strong>上，依照指针类型进行取值。</p>
+<h2 id="八-长度运算符sizeof’的用法"><a href="#八-长度运算符sizeof’的用法" class="headerlink" title="八.长度运算符sizeof’的用法"></a>八.长度运算符sizeof’的用法</h2><p>sizeof操作符计算的是变量（类型）所占空间的大小，是按字节来计算</p>
+<p><strong>sizeof是运算符，不是函数</strong></p>
+<p>该运算符在编译阶段就已经起作用了。它以字节为单位返回其操作数的大小。它的操作数可以是数据对象也可以是一个类型。如果是类型那么操作数需要用圆括号括起来。</p>
+<p>如：sizeof(int)=4;</p>
+<p>sizeof(char) 等于1</p>
+<p><strong>sizeof以byte为单位返回操作数的大小</strong></p>
+<p><strong>扩展资料：</strong></p>
+<p>(0)sizeof是运算符，不是函数；</p>
+<p>(1)sizeof不能求得void类型的长度；</p>
+<p>(2)sizeof能求得void类型的指针的长度；</p>
+<p>(3)sizeof能求得静态分配内存的数组的长度!</p>
+<p>(4)sizeof不能求得动态分配的内存的大小!</p>
+<p>(5)sizeof不能对不完整的数组求长度；</p>
+<p>(6)当表达式作为sizeof的操作数时，它返回表达式的计算结果的类型大小，但是它不对表达式求值！</p>
+<p>(7)sizeof可以对函数调用求大小，并且求得的大小等于返回类型的大小，但是不执行函数体！</p>
+<p>(8)sizeof求得的结构体(及其对象)的大小并不等于各个数据成员对象的大小之和！</p>
+<p>(9)sizeof不能用于求结构体的位域成员的大小，但是可以求得包含位域成员的结构体的大小！</p>
+<h2 id="九-算术运算符-和关系运算符-gt-lt"><a href="#九-算术运算符-和关系运算符-gt-lt" class="headerlink" title="九.算术运算符+=*/% 和关系运算符&gt;&lt;="></a>九.算术运算符+=*/% 和关系运算符&gt;&lt;=</h2><p>这些都很简单，应该不用过多介绍</p>
+<p><img src="https://img-blog.csdn.net/20170326120556183?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2lnbWFfaW5m/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="在这里插入图片描述"></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>==</td>
+<td>等于</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+=</td>
+<td>相加之后赋值</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>相减之后赋值</td>
+</tr>
+<tr>
+<td>*=</td>
+<td>相乘之后赋值</td>
+</tr>
+<tr>
+<td>/=</td>
+<td>相除之后赋值</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>取余之后赋值</td>
+</tr>
+<tr>
+<td>&gt;&gt;=</td>
+<td>右移之后赋值</td>
+</tr>
+<tr>
+<td>&lt;&lt;=</td>
+<td>左移之后赋值</td>
+</tr>
+<tr>
+<td>丨=</td>
+<td>按位或之后赋值</td>
+</tr>
+<tr>
+<td>^=</td>
+<td>按位与</td>
+</tr>
+</tbody></table>
+<p><strong>扩展资料：</strong></p>
+<p><strong>单目运算符 双目运算符 三目运算符</strong></p>
+<p>单目就是这个运算符只对一个变量进行操作</p>
+<p>举例：int a=1;a++;（第二句“a++”则只对a一个变量进行了操作）</p>
+<p>双目就是这个运算符对两个变量进行操作</p>
+<p>举例：int a=1,b=2,c;c=a+b;(第二句“c=a+b”则是对a,b两个变量进行了操作)</p>
+<p>三目就是这个运算符对三个变量进行操作</p>
+<h2 id="十-表达式"><a href="#十-表达式" class="headerlink" title="十.?表达式"></a>十.?表达式</h2><p><strong>条件1 ? 表达式2 : 表达式3</strong></p>
+<p> <strong>是否满足条件1，如果满足则执行操作2，否则执行操作3。</strong></p>
+<p>条件运算符是C语言中唯一的一个三目运算符，其求值规则为：如果表达式1的值为真，则以表达式2 的值作为整个条件表达式的值，否则以表达式3的值作为整个条件表达式的值。条件表达式通常用于赋值语句之中。</p>
+<p>我们可以把想成这样</p>
+<p>求两个数中最大的一个</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(a&gt;b)&#123;</span><br><span class="line"></span><br><span class="line">    max = a;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">    max = b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而用？表达式</p>
+<p><code>max = (a&gt;b) ? a : b;</code></p>
+<p>如a&gt;b为真，则把a赋予max，否则把b 赋予max。</p>
+<p>是不是很节约代码，又显的高级</p>
+<h2 id="十一-位操作符与位移操作符"><a href="#十一-位操作符与位移操作符" class="headerlink" title="十一.位操作符与位移操作符"></a>十一.位操作符与位移操作符</h2><p>C语言提供了六种位运算<br>| 位运算符 | 含义 | 举例 |<br>|–|–|–|<br>| &amp;（and） | 按位与 | a&amp;b  |<br>| |   ( or ) |按位或  |  a|b |<br>|^   （ xor ）  |按位异或  | a^b  |<br>| ~  ( not ) |按位取反  | ~a  |<br>|&lt;&lt;   (  shi )  | 左移 |  a&lt;&lt;1 |<br>|&gt;&gt; (  shr  )  |右移  |  a&gt;&gt;1 |</p>
+<p><strong>11.1</strong><br>按位“与”&amp;（双目运算符）：仅当两个操作数都为1时，结果为1，否则为0。参与运算的数以补码方式出现。<strong>因为计算机是以补码形式存储数据的</strong></p>
+<p>   <strong>例：9&amp;5=1<br>   <br>     0000 1001————-   <font face="Times New Roman" color="red">9的补码<font>   <br><br>    <font color="black">&amp;  0000 0101————- <font> <font color="red">  5的补码<font><font face="Times New Roman" color="black"><br>       ———-<br>        0000 0001————-  <font>  <font face="Times New Roman" color="red">1的补码</font></font></font></font></font></font></font></font></font></strong><font></font></p>
+<p>   <strong>应用：</strong></p>
+<p>  <strong>a、通常将某些位清零或保留某些位。例如：将a的高八位清零，保留低八位，可做a&amp;255运算。</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>00000000 11111111</strong>—————— 255的二进制数</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>00000000 00100000</strong>—————— a的二进制数<br> &nbsp;&nbsp;&nbsp;&nbsp;   ———-</p>
+<p>&nbsp;&nbsp;&nbsp;v<strong>00000000 11111111</strong></p>
+<p>   <strong>将字符“A”的低四位清零 保留高四位   可以做“A”&amp;240( 0xf0)</strong></p>
+<p>&nbsp;&nbsp;&nbsp; <strong>0100 0001‬——————“A”的二进制数<br><br>&nbsp;&nbsp;   1111 0000‬——————240的二进制数<br> &nbsp;&nbsp;&nbsp;&nbsp; ———-<br>  &nbsp;&nbsp;&nbsp;0001 0000              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   &nbsp;&nbsp;&nbsp;&nbsp;       保留了“A”的高四位</strong></p>
+<p>   b、取某数的指定位。例如：设a=1000 1110,要取出a中第二位的1，则可以用 a &amp; 0000 0010 实现。</p>
+<p> 11.2 <strong>按位“或”|（双目运算符）：仅当两个操作数都为0时，结果为0，否则为1。</strong></p>
+<p>例：9|5=13</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;0000 1001————- <strong>9的补码</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;|  0000 0101————- <strong>5的补码</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <strong>———-</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;0000 1101————- <strong>13的补码</strong></p>
+<p> &nbsp;   应用：常用来将源操作数某些位置1。例如：设a=0100 0001,将低四位全部置1，则可以用 a | 0000 1111 实现。</p>
+<p><strong>11.3 按位“异或”^（双目运算符）：参加运算的两个运算量，如果两个数的相应位的值不同，则该位的结果值为1，否则为0。即：0 ^ 0 =0；0 ^ 1 =1；1 ^ 0 =1；1 ^ 1 =0</strong></p>
+<p>   例： 9^5=12</p>
+<p> &nbsp;     &nbsp;&nbsp;&nbsp;    0000 1001————- <strong>9的补码</strong></p>
+<p>&nbsp;  &nbsp;&nbsp;&nbsp;   ^  0000 0101————- <strong>5的补码</strong></p>
+<p>&nbsp; &nbsp;&nbsp;&nbsp;      <strong>———-</strong></p>
+<p>&nbsp;     &nbsp;&nbsp;&nbsp;   0000 1101————- <strong>12的补码</strong></p>
+<p> 应用：</p>
+<p>   &nbsp; a、特定位置取反。例如：设a=1001,将第2位取反，则可以用 a ^1011 实现。</p>
+<p><strong>&nbsp;    b、不引入第三变量，交换两个数的值。 <br><br>  &nbsp;     例：a=1,b=2,交换两个数的值 <br><br>  &nbsp;     &nbsp;   a=a^b;<br> &nbsp;    &nbsp;     b=a^b;<br>&nbsp;    &nbsp;      a=a^b;</strong>                </p>
+<p> <strong>11.4按位取反”运算符~</strong></p>
+<p><strong>按位取反的意思就是每一位取反，0变1，1变0</strong></p>
+<p>所以: ~100 的二进制表示为：1001 1011 所以等号左边=1001 1011</p>
+<p><strong>11.5、移位操作符</strong></p>
+<p> <strong>1 左移运算 &lt;&lt;（丢弃最高位，0补最低位）:把一个数的所有位都向左移动若干位。</strong></p>
+<pre><code>例如：int i=1；i=i&lt;&lt;2;    //这表示将i里的值左移两位。    </code></pre><p>   分析：1的2进制是000…0001(这里1前面0的个数和int的位数有关,32位机器,gcc里有31个0),左移2位之后变成000… 0100,也就是10进制的4,所以说左移1位相当于乘以2,那么左移n位就是乘以2的n次方了（注：有符号数不完全适用）</p>
+<p><strong>2  右移运算   &gt;&gt;:把一个数的所有位都向右移动若干位。</strong>   </p>
+<pre><code>例如：int i = 0x80000000;
+    i = i &gt;&gt; 1;  //i的值不会变成0x40000000,而会变成0xc0000000</code></pre><p>   &nbsp;   分析：符号位向右移动后,正数的话补0,负数补1,也就是汇编语言中的算术右移。同样当移动的位数超过类型的长度时,会取余数,然后移动余数个位。</p>
+<h2 id="十二-‘逗号运算符’的用法"><a href="#十二-‘逗号运算符’的用法" class="headerlink" title="十二.‘逗号运算符’的用法"></a>十二.‘逗号运算符’的用法</h2><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>exp1，exp2,…expN</td>
+<td>从左往右依次执行，整个表达式结果是最后一个表达式的结果</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(）</span></span></span><br><span class="line"><span class="function"><span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> a,s,d;</span></span></span><br><span class="line"><span class="function"><span class="params">    s=<span class="number">2</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    d=<span class="number">3</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">    a=<span class="number">12</span>+(s+<span class="number">2</span>,d+<span class="number">4</span>);</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>先算括号内的值：s+2=4，d+4=7；括号内应为（4,7），括号内取值只取最后一个，如果没有括号则取第一个；a=12+7=19。</p>
+<h2 id="十三-define和const"><a href="#十三-define和const" class="headerlink" title="十三.define和const"></a>十三.define和const</h2><p><strong>define和const的区别：</strong></p>
+<ul>
+<li>**const 定义的常数是变量，也带类型， #define 定义的只是个常数，不带类型；</li>
+<li>define是在编译的预处理阶段起作用，而const是在 编译、运行的时候起作用；</li>
+<li>define只是简单的字符串替换，没有类型检查。而const有对应的数据类型，是要进行判断的，可以避免一些低级的错误；</li>
+<li>const变量存放在内存的静态区域中，在程序运行过程中const变量只有一个拷贝，而#define 所定义的宏变量却有多个拷贝，所消耗的内存要比const变量的大得多；</li>
+<li>用define可以定义一些简单的函数，const是不可以定义函数的；</li>
+<li>define可以用来防止头文件重复引用，而const不能；**</li>
+</ul>
+<p>const不足的地方，是与生俱来的，const不能重定义，而#define可以通过#undef取消某个符号的定义，再重新定义；<br>在编译时， 编译器通常不为const常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高。 </p>
+<h2 id="补充附录："><a href="#补充附录：" class="headerlink" title="补充附录："></a>补充附录：</h2><h2 id="补充附录：-1"><a href="#补充附录：-1" class="headerlink" title="补充附录："></a>补充附录：</h2><p><strong>①**</strong>32<strong>**个关键字及其含义：</strong></p>
+<p>auto </p>
+<p>声明自动变量 一般不使用 </p>
+<p>double </p>
+<p>声明双精度变量或函数 </p>
+<p>int</p>
+<p>声明整型变量或函数 </p>
+<p>struct</p>
+<p>声明结构体变量或函数 </p>
+<p>break</p>
+<p>跳出当前循环 </p>
+<p>else </p>
+<p>条件语句否定分支（与 if 连用） </p>
+<p>long </p>
+<p>声明长整型变量或函数 </p>
+<p>switch </p>
+<p>用于开关语句 </p>
+<p>case</p>
+<p>开关语句分支 </p>
+<p>enum </p>
+<p>声明枚举类型 </p>
+<p>register</p>
+<p>声明积存器变量 </p>
+<p>typedef</p>
+<p>用以给数据类型取别名（当然还有其他作用） </p>
+<p>char </p>
+<p>声明字符型变量或函数 </p>
+<p>extern</p>
+<p>声明变量是在其他文件正声明（也可以看做是引用变量） </p>
+<p>return</p>
+<p>子程序返回语句（可以带参数，也看不带参数） </p>
+<p>union</p>
+<p>声明联合数据类型 </p>
+<p>const </p>
+<p>声明只读变量 </p>
+<p>float</p>
+<p>声明浮点型变量或函数 </p>
+<p>short </p>
+<p>声明短整型变量或函数 </p>
+<p>unsigned</p>
+<p>声明无符号类型变量或函数 </p>
+<p>continue</p>
+<p>结束当前循环，开始下一轮循环 </p>
+<p>for：</p>
+<p>一种循环语句(可意会不可言传） </p>
+<p>signed</p>
+<p>生命有符号类型变量或函数 </p>
+<p>void </p>
+<p>声明函数无返回值或无参数，声明无类型指针（基本上就这三个作用） </p>
+<p>default</p>
+<p>开关语句中的“其他”分支 </p>
+<p>goto</p>
+<p>无条件跳转语句 </p>
+<p>sizeof</p>
+<p>计算数据类型长度 </p>
+<p>volatile</p>
+<p>说明变量在程序执行中可被隐含地改变 </p>
+<p>do </p>
+<p>循环语句的循环体 </p>
+<p>while </p>
+<p>循环语句的循环条件 </p>
+<p>static </p>
+<p>声明静态变量 </p>
+<p>if</p>
+<p>条件语句</p>
+<p><strong>②剩余格式控制符:</strong></p>
+<p>%d   </p>
+<p>整形</p>
+<p>%f</p>
+<p>浮点型(实型)</p>
+<p>%lf</p>
+<p>双精度</p>
+<p>%hd</p>
+<p>短整型</p>
+<p>%ld</p>
+<p>长整型</p>
+<p>%u</p>
+<p>无符号输出</p>
+<p>%-</p>
+<p>左对齐</p>
+<p>%m</p>
+<p>按m个字宽输出</p>
+<p>%s</p>
+<p>输出字符串</p>
+<p>%0</p>
+<p>空位补0</p>
+<p>%x</p>
+<p>  十六进制格式输出</p>
+<p>%o</p>
+<p>八进制格式输出</p>
+<p>%e</p>
+<p> 指数形式输出</p>
+<p>%g</p>
+<p>智能输出(%f || %e 选择最优输出方案)</p>
+<p>%c</p>
+<p>输出字符</p>
+<p>%p</p>
+<p>  十六进制形式输出变量地址</p>
+<p>%.n</p>
+<p>保留小数点后n位or截取字符串前n位</p>
+<p><strong>③u8，u16，u32</strong></p>
+<p><strong>u8是unsigned char</strong></p>
+<p><strong>u16是unsigned short</strong></p>
+<p><strong>u32是unsigned int</strong></p>
+<p>同理 <strong>uint8 uint16 uint32</strong> 也一样</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/17949/" title="【C语言】运算符与操作符的用法全面汇总(非常有用)">http://zxiaoxuan.cn/posts/17949/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言/" rel="tag"><i class="fa fa-tag"></i> C语言</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/38664/" rel="next" title="C语言形参跟实参详解">
+                <i class="fa fa-chevron-left"></i> C语言形参跟实参详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/38082/" rel="prev" title="关于Python ord()和chr()返回ASCII码和Unicode码的看法">
+                关于Python ord()和chr()返回ASCII码和Unicode码的看法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一．‘-gt-’的用法"><span class="nav-number">1.</span> <span class="nav-text">一．‘-&gt;’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-‘-’的用法"><span class="nav-number">2.</span> <span class="nav-text">二.‘[ ]’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-‘-’的用法"><span class="nav-number">3.</span> <span class="nav-text">三 ‘.’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-‘！’的用法"><span class="nav-number">4.</span> <span class="nav-text">四 ‘！’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-‘逻辑与-amp-amp-和逻辑或-’的用法"><span class="nav-number">5.</span> <span class="nav-text">五  ‘逻辑与&amp;&amp;和逻辑或||’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六-自增运算符-，自减运算符–’的用法"><span class="nav-number">6.</span> <span class="nav-text">六.自增运算符++，自减运算符–’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七-取地址运算符-amp-和指针运算符"><span class="nav-number">7.</span> <span class="nav-text">七.取地址运算符 &amp;和指针运算符*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八-长度运算符sizeof’的用法"><span class="nav-number">8.</span> <span class="nav-text">八.长度运算符sizeof’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九-算术运算符-和关系运算符-gt-lt"><span class="nav-number">9.</span> <span class="nav-text">九.算术运算符+=*/% 和关系运算符&gt;&lt;=</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十-表达式"><span class="nav-number">10.</span> <span class="nav-text">十.?表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十一-位操作符与位移操作符"><span class="nav-number">11.</span> <span class="nav-text">十一.位操作符与位移操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十二-‘逗号运算符’的用法"><span class="nav-number">12.</span> <span class="nav-text">十二.‘逗号运算符’的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十三-define和const"><span class="nav-number">13.</span> <span class="nav-text">十三.define和const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充附录："><span class="nav-number">14.</span> <span class="nav-text">补充附录：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充附录：-1"><span class="nav-number">15.</span> <span class="nav-text">补充附录：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

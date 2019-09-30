@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NXP智能车,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="基于K60/K66/LPC的HC-SR04超声波测距(附带代码)最近在搞超声波，把自己走过的一些坑，和经验分享一下，互相学习，让初学者少走一些弯路，K60代码网上找了一些，结果没有能用的，没办法，自己看讲解，用PIT计时测试成功，在K60和K66上测试可以使用，测距也比较准确，希望能有些帮助 1HC-SR04超声波测距原理准备 ：引出4个排针，连接到单片机的vcc(5V)，io口，io口，gnd，">
+<meta name="keywords" content="NXP智能车">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于K60&#x2F;K66&#x2F;LPC的HC-SR04超声波测距(附带代码)">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/50635/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="基于K60/K66/LPC的HC-SR04超声波测距(附带代码)最近在搞超声波，把自己走过的一些坑，和经验分享一下，互相学习，让初学者少走一些弯路，K60代码网上找了一些，结果没有能用的，没办法，自己看讲解，用PIT计时测试成功，在K60和K66上测试可以使用，测距也比较准确，希望能有些帮助 1HC-SR04超声波测距原理准备 ：引出4个排针，连接到单片机的vcc(5V)，io口，io口，gnd，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190224080909218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190224125554988.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-09-18T07:23:48.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于K60&#x2F;K66&#x2F;LPC的HC-SR04超声波测距(附带代码)">
+<meta name="twitter:description" content="基于K60/K66/LPC的HC-SR04超声波测距(附带代码)最近在搞超声波，把自己走过的一些坑，和经验分享一下，互相学习，让初学者少走一些弯路，K60代码网上找了一些，结果没有能用的，没办法，自己看讲解，用PIT计时测试成功，在K60和K66上测试可以使用，测距也比较准确，希望能有些帮助 1HC-SR04超声波测距原理准备 ：引出4个排针，连接到单片机的vcc(5V)，io口，io口，gnd，">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190224080909218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/50635/">
+
+
+
+
+
+
+
+  <title>基于K60/K66/LPC的HC-SR04超声波测距(附带代码) | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/50635/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于K60/K66/LPC的HC-SR04超声波测距(附带代码)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-18T13:59:09+08:00">
+                2019-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NXP智能车/" itemprop="url" rel="index">
+                    <span itemprop="name">NXP智能车</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/50635/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/50635/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>基于K60/K66/LPC的HC-SR04超声波测距(附带代码)<br>最近在搞超声波，把自己走过的一些坑，和经验分享一下，互相学习，让初学者少走一些弯路，K60代码网上找了一些，结果没有能用的，没办法，自己看讲解，用PIT计时测试成功，在K60和K66上测试可以使用，测距也比较准确，希望能有些帮助</p>
+<h2 id="1HC-SR04超声波测距原理"><a href="#1HC-SR04超声波测距原理" class="headerlink" title="1HC-SR04超声波测距原理"></a>1HC-SR04超声波测距原理</h2><p>准备 ：引出4个排针，连接到单片机的vcc(5V)，io口，io口，gnd，用到2个io口，</p>
+<p>1.给脉冲触发引脚（Trig）输入一个<strong>持续时间&gt;10us</strong>的高电平</p>
+<p> 2.输入方波后，模块会自动发射8个40KHz的声波，与此同时回波引脚（ECOH）端的电平会由0变为1； (<strong>输出一个高电平)</strong>（此时应该启动定时器计时）<br> .3.当超声波返回被模块接收到时，接收端的电平会由1变为0(变为低电平)；该<strong>高电平的持续时间即为超声波往返的时间</strong>，（这时停止定时器计数），</p>
+<p>4.在单片机里面<strong>通过定时器计算Echo高电平的持续时间即可算出超声波往返的距离</strong>。 </p>
+<p>5.测距公式：距离=（高电平时间*声速）/2；<br><img src="https://img-blog.csdnimg.cn/20190224080909218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="2-调试经验"><a href="#2-调试经验" class="headerlink" title="2.调试经验"></a>2.调试经验</h2><p>1<strong>注意超声波要接的是5V，不是3.3V</strong>，使用下载器时一般都是3.3V供电，这就导致在线调试没有数据，应该给板子供上电，下载器不供电，超声波接到<strong>5V电源口</strong>，并且检测下是不是5V.</p>
+<p><strong>2.测距时不要距离太近，会导致数据不准确</strong></p>
+<p>3.<strong>超声波代码要尽量精简</strong>，不要繁琐，假设你代码过于繁琐，因为超声波测距时间非常短（us单位）可能这次电平已经发生变化，但是你的MCU在经行其他代码运行，可能就检测不到这次信号。</p>
+<p>4.要考虑各种因素影响测距稳定，比如高电平检测是否准确，温度原因等，超声波测距的性能与被测物表面材料有很大关系，如毛料、布料对超声波 的反射率很小，会严重影响测量结果。  </p>
+<p>5.io口任意两个即可，注意不要占用到之前本来使用的，否则会出问题，<strong>还有PIT1如果使用，就初始化PIT2进行计时，一个PIT做一种工作</strong></p>
+<p>6 测量时间间隔在60MS左右最好</p>
+<p>7 测距等待一定的时间，如果超时后依然没有数据返回，就放弃，而进行下一次测量。  </p>
+<blockquote>
+<p>超声波最大测距4米，反射路径8米，声速度331米/秒）  8/331=0.02416  //24MS</p>
+</blockquote>
+<hr>
+<hr>
+<p>话不多说直接上代码⬇ </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>  <span class="meta-string">"MK60_PIT.h"</span>   </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIG    D9    <span class="comment">//超声波发送端</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ECHG    E12   <span class="comment">//超声波接收端</span></span></span><br><span class="line"><span class="keyword">int</span> Distance = <span class="number">0</span>;   <span class="comment">//测量距离</span></span><br><span class="line">gpio_init(TRIG,GPO,<span class="number">0</span>);    <span class="comment">//初始化发送端</span></span><br><span class="line">gpio_init(ECHG,GPI,<span class="number">0</span>);    <span class="comment">//初始化接收端</span></span><br><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @file       distance</span></span><br><span class="line"><span class="comment"> * @brief      超声波测距</span></span><br><span class="line"><span class="comment"> * @author      Z小旋</span></span><br><span class="line"><span class="comment"> * @version    v1.0</span></span><br><span class="line"><span class="comment"> * @date       2019-1-17</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">distance</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     uint32 Time = <span class="number">0</span>;</span><br><span class="line">     gpio_set(TRIG,<span class="number">1</span>);               <span class="comment">//产生触发脉冲</span></span><br><span class="line">     pit_delay_us(pit1,<span class="number">20</span>);       </span><br><span class="line">     gpio_set(TRIG,<span class="number">0</span>);           <span class="comment">//产生一个20us的高电平脉冲</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">     <span class="keyword">while</span>(gpio_get (ECHG) == <span class="number">0</span>);             <span class="comment">//等待电平变高，低电平一直等待</span></span><br><span class="line">     pit_time_start  (pit1); <span class="comment">//开始计时</span></span><br><span class="line">     <span class="keyword">while</span>(gpio_get(ECHG) == <span class="number">1</span>)              <span class="comment">//等待电平变低，高电平一直等待</span></span><br><span class="line">     &#123;</span><br><span class="line">       Time++;</span><br><span class="line">       systick_delay(<span class="number">1</span>);  </span><br><span class="line">       <span class="keyword">if</span>(Time&gt;<span class="number">240000</span>) <span class="keyword">break</span>; <span class="comment">//24MS还没有检测到     </span></span><br><span class="line">     &#125;;               </span><br><span class="line">     timevar = pit_time_get(pit1);    <span class="comment">//停止计时，获取计时时间</span></span><br><span class="line">         <span class="comment">//timevar = timevar * 340 /2/10;</span></span><br><span class="line">     Distance = timevar*(<span class="number">331.4</span>+<span class="number">0.607</span>*<span class="number">10</span>)/<span class="number">2000</span>;  <span class="comment">//加上温度补偿</span></span><br><span class="line">   <span class="comment">//  DELAY_MS(60); //延时60MS，测距更精确，可以不用,2.27号：有反映说加上之后测距不精确，注释之后就好了，自行测试</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码测距误差在10mm以内，满足正常使用，直接调用函数即可<br><img src="https://img-blog.csdnimg.cn/20190224125554988.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>下面这个是使用外部触发中断进行的，附上完整代码，直接复制使用即可，如果没有对应的库，完整例程在下方下载，弄到百度云了，CSDN下载还要钱。。。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"headfile.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIG A14                <span class="comment">//定义超声波触发引脚端口</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ECHO A13                <span class="comment">//定义超声波回响引脚端口</span></span></span><br><span class="line"></span><br><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @brief      超声波测距</span></span><br><span class="line"><span class="comment"> * @author      Z小旋</span></span><br><span class="line"><span class="comment"> * @version    v1.0</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">uint8  flag_mode = <span class="number">0</span>;<span class="comment">//当前运行状态 0：采集结束  1：正在采集  </span></span><br><span class="line">uint32 dis_time;<span class="comment">//定义时间变量 单位微秒</span></span><br><span class="line">uint32 distance;<span class="comment">//定义距离变量 单位毫米</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">  		gpio_init (TRIG,GPO,<span class="number">0</span>);                                                   <span class="comment">//触发引脚初始化 新生板A28</span></span><br><span class="line">		port_init (ECHO, IRQ_FALLING | PF | ALT1 | PULLUP );                      <span class="comment">//接收引脚初始化 新生板E9</span></span><br><span class="line">		<span class="comment">//port_init (ECHO_PIN, IRQ_RISING | PF | ALT1 | PULLUP );</span></span><br><span class="line">		set_irq_priority(PORTA_IRQn,<span class="number">3</span>);<span class="comment">//设置优先级 越低优先级越高</span></span><br><span class="line">		enable_irq(PORTA_IRQn);<span class="comment">//开中断 PIN_INT0_IRQn - PIN_INT7_IRQn</span></span><br><span class="line">		EnableInterrupts;</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里是while循环，使用时请封装成函数并在中断中调用，不宜调用过快，否则会很占系统时序</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(!flag_mode)                   </span><br><span class="line">      &#123;</span><br><span class="line">      </span><br><span class="line">        flag_mode = <span class="number">1</span>;</span><br><span class="line">        gpio_set(TRIG, <span class="number">1</span>);</span><br><span class="line">        pit_delay_us(pit1,<span class="number">15</span>);       </span><br><span class="line">        gpio_set(TRIG, <span class="number">0</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(!gpio_get(ECHO)); <span class="comment">//检测到接收引脚为高电平则开始计时</span></span><br><span class="line">        pit_time_start  (pit1); <span class="comment">//开始计时</span></span><br><span class="line">        dis_time = <span class="number">0</span>;               <span class="comment">//时间清零</span></span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      <span class="comment">//超时检测</span></span><br><span class="line">      <span class="keyword">if</span>(<span class="number">20000</span> &lt;= pit_time_get(pit1))   <span class="comment">//如果等待20ms之后还未接收到回响信号则 认为前方无障碍物  </span></span><br><span class="line">      &#123;</span><br><span class="line">        dis_time = <span class="number">0</span>;           <span class="comment">//时间清零</span></span><br><span class="line">        distance = <span class="number">1000</span>;       </span><br><span class="line">        flag_mode = <span class="number">0</span>;          <span class="comment">//采集结束</span></span><br><span class="line">      &#125;   </span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">//  @brief      PROTA中断执行函数</span></span><br><span class="line"><span class="comment">//  @return     void   </span></span><br><span class="line"><span class="comment">//  @since      v1.0</span></span><br><span class="line"><span class="comment">//  Sample usage:               当A口启用中断功能且发生中断的时候会自动执行该函数</span></span><br><span class="line"><span class="comment">//-------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PORTA_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//清除中断标志第一种方法直接操作寄存器，每一位对应一个引脚</span></span><br><span class="line">  	PORTA_FLAG_CLR(A13);</span><br><span class="line">      <span class="keyword">if</span>(flag_mode)</span><br><span class="line">    &#123;</span><br><span class="line">        dis_time = pit_time_get(pit1);        <span class="comment">//获取时间</span></span><br><span class="line">       distance = (int16)(dis_time*(<span class="number">331.4</span>+<span class="number">0.607</span>*<span class="number">10</span>)/<span class="number">20000</span>);  <span class="comment">//加上温度补偿</span></span><br><span class="line">        flag_mode = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>链接: <a href="https://pan.baidu.com/s/1YP8SuujxxRzOxO2cm_KWIQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1YP8SuujxxRzOxO2cm_KWIQ</a> 提取码: btyv </p>
+<p>整理不易，都看到这儿了，点个赞再走呗</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/50635/" title="基于K60/K66/LPC的HC-SR04超声波测距(附带代码)">http://zxiaoxuan.cn/posts/50635/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NXP智能车/" rel="tag"><i class="fa fa-tag"></i> NXP智能车</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/33774/" rel="next" title="Python中变量在内存的存储与地址变化详解(深浅拷贝，值/引用传递、可变不可变数据类型)">
+                <i class="fa fa-chevron-left"></i> Python中变量在内存的存储与地址变化详解(深浅拷贝，值/引用传递、可变不可变数据类型)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/57165/" rel="prev" title="图像处理一之-摄像头二值化处理-(什么是二值化)">
+                图像处理一之-摄像头二值化处理-(什么是二值化) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1HC-SR04超声波测距原理"><span class="nav-number">1.</span> <span class="nav-text">1HC-SR04超声波测距原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-调试经验"><span class="nav-number">2.</span> <span class="nav-text">2.调试经验</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

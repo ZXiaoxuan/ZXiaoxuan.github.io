@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C语言,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="渣渣C的学习之路用最简单的话，让你最快速明白！ C语言中，每一个变量和函数都有2个属性：数据类型和数据的存储类别。C的存储类别有4种：自动的（auto）、静态的（static）、寄存器的（register）、外部的（extern）。变量的存储类别对应变量的作用域与生命周期。 1.externextern外部声明，简单来说：你如果要在a.c中使用b.c的一个变量avg，直接使用是会报错的，这时候我们">
+<meta name="keywords" content="C语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【c语言】关键字存储类型讲解(auto,extern,static,register,const">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/35548/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="渣渣C的学习之路用最简单的话，让你最快速明白！ C语言中，每一个变量和函数都有2个属性：数据类型和数据的存储类别。C的存储类别有4种：自动的（auto）、静态的（static）、寄存器的（register）、外部的（extern）。变量的存储类别对应变量的作用域与生命周期。 1.externextern外部声明，简单来说：你如果要在a.c中使用b.c的一个变量avg，直接使用是会报错的，这时候我们">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-18T06:52:25.164Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【c语言】关键字存储类型讲解(auto,extern,static,register,const">
+<meta name="twitter:description" content="渣渣C的学习之路用最简单的话，让你最快速明白！ C语言中，每一个变量和函数都有2个属性：数据类型和数据的存储类别。C的存储类别有4种：自动的（auto）、静态的（static）、寄存器的（register）、外部的（extern）。变量的存储类别对应变量的作用域与生命周期。 1.externextern外部声明，简单来说：你如果要在a.c中使用b.c的一个变量avg，直接使用是会报错的，这时候我们">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/35548/">
+
+
+
+
+
+
+
+  <title>【c语言】关键字存储类型讲解(auto,extern,static,register,const | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/35548/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【c语言】关键字存储类型讲解(auto,extern,static,register,const</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-18T14:39:13+08:00">
+                2019-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C语言/" itemprop="url" rel="index">
+                    <span itemprop="name">C语言</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/35548/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/35548/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="渣渣C的学习之路"><a href="#渣渣C的学习之路" class="headerlink" title="渣渣C的学习之路"></a>渣渣C的学习之路</h2><p><strong>用最简单的话，让你最快速明白！</strong></p>
+<p>C语言中，<strong>每一个变量和函数都有2个属性：数据类型和数据的存储类别。C的存储类别有4种：自动的（auto）、静态的（static）、寄存器的（register）、外部的（extern）</strong>。变量的存储类别对应<strong>变量的作用域与生命周期</strong>。</p>
+<h1 id="1-extern"><a href="#1-extern" class="headerlink" title="1.extern"></a>1.extern</h1><p>extern外部声明，简单来说：<strong>你如果要在a.c中使用b.c的一个变量avg，直接使用是会报错的，这时候我们便需要用</strong></p>
+<p>*<em>extern int avg; 在a.h中声明avg，这样就可以引用avg了  *</em></p>
+<p><strong>当然你要保证avg是一个全局变量，局部变量</strong>不能用extern的修饰，且局部变量在运行时才在堆栈部分分配内存。</p>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a><strong>注意事项：</strong></h3><p><strong>1.外部声明可以多次，定义只能一次</strong></p>
+<p>简单来说就是avg<strong>只能定义一次</strong>，但是可以有很多外部声明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extern int a;//声明一个全局变量aint a; //定义一个全局变量aextern int a =0 ;//定义一个全局变量a 并给初值。int a =0;//定义一个全局变量a,并给初值，</span><br></pre></td></tr></table></figure>
+
+
+<p>int a 等于 extern int a，都是定义一个可以被外部使用的全局变量，并给初值。<br>但是注意定义只能出现在一处。不管是<strong>int a;还是extern int a=0;还是int a=0;都只能出现一次</strong>，而extern int a，extern a可以出现很多次。</p>
+<p><strong>2.用extern声明外部变量时，类型名可写可不写，如”extern int num;”也可以写成”extern num;”。因为它不是定义变量，可以不指定类型，只许写出外部变量名即可</strong></p>
+<p><strong>3.</strong>变量如果只是用到声明，放在.h中就行了；<br>*<em>如果声明的同时并定义一个全局变量的话，在.h里用extern声明，并在对应的.c里定义。<br>其它的.c文件直接include“xx.h”就行了  *</em></p>
+<p>// ---- Math.h —-<br>extern “C”;<br>// ---- Math.C —-<br>int “C”;</p>
+<p>// ---- Add.c —-  </p>
+<p>#include “Math.h”</p>
+<p>C=5;<br>// C 可以从被调用</p>
+<p>这样子是不是很方便！</p>
+<h1 id="2-auto"><a href="#2-auto" class="headerlink" title="2.*auto   *"></a>2.*<em>auto   *</em></h1><p><strong>auto被解释为一个自动存储变量的关键字，也就是申明一块临时的变量内存</strong>。函数中的形参和在函数中定义的<strong>局部变量</strong>（包括符合语句中的局部变量）都属于此类。如 函数中定义变量 int a; 和 auto int a; 是等价的，关键字“auto”是默认省略的，此关键字很少使用</p>
+<p><strong>注意事项：</strong></p>
+<p><strong>1.auto是定义<a href="https://wenwen.sogou.com/s/?w=%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F&ch=ww.xqy.chain" target="_blank" rel="noopener">局部变量</a>，即只能在定义的范围内使用（一般就是在花括号里{}）</strong>全局变量默认说明符为extern。</p>
+<p>2.<strong>auto变量在离开作用域是会变程序自动释放，不会发生内存溢出情况</strong>（除了包含指针的类）使用auto变量的优势是不需要考虑去变量是否被释放，比较安全。（局部变量）</p>
+<p><strong>3.auto不能作为函数的参数</strong></p>
+<p>4. auto不能直接用来声明数组</p>
+<h1 id="3-static"><a href="#3-static" class="headerlink" title="3.static"></a>3.<strong>static</strong></h1><p>*<em>这个关键字很重要，我们需要对他很了解 *</em></p>
+<p><strong>我们分为几点来介绍他</strong></p>
+<p>1.</p>
+<p>我们知道局部变量在调用完之后就会销毁，而我们有时希望函数中的<strong>局部变量的值在<a href="https://www.baidu.com/s?wd=%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">函数调用</a>结束后不消失而继续保留原值</strong>，即其占用的<a href="https://www.baidu.com/s?wd=%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">存储单元</a>不释放<strong>，在下一次再调用该函数时，该变量已有值（就是上<a href="https://www.baidu.com/s?wd=%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">一次函数</a>调用结束时的值）</strong>。这时就应该指定该局部变量为“静态局部变量”，用关键字static进行声明。</p>
+<p>2<strong>.static在修饰全局变量时，该变量只能在当前文件中使用，其他文件无法访问和使用，即时用extern声明也是无效的，但是可以在多个文件中定义同一个名字的变量，不会受到影响</strong></p>
+<blockquote>
+<p>静态函数只能在声明它的文件中可见，其他文件不能引用该函数</p>
+<p>不同的文件可以使用相同名字的静态函数，互不影响</p>
+</blockquote>
+<p><strong>static避免多个文件使用了相同的变量名而导致冲突,</strong></p>
+<p>　比如有多个文件，分别由几个人独立开发的。假定他们在各自的文件中定义相同的“全局”变量名（仅仅指在他们独自的文件中全局），当系统集成时，由于他们使用了名字一样的“全局”变量，导致有难于遇见的问题。解决这个问题方便的做法就是在各自文件中，在相同的全局变量申明前加上static修饰符。<strong>这样系统就会为他们分配不同的内存</strong>，互不影响了。</p>
+<p><strong>3.static修饰一个函数，则这个函数同样只能在本文件中调用，不能被其他文件调用</strong></p>
+<p><strong>4.Static修饰的局部变量存放在全局数据区的静态变量区。初始化的时候自动初始化为0；</strong> 并且在程序执行期间不销毁，程序执行完成之后才销毁(<strong>在静态存储区，内存中所有字节默认都是0x00</strong>)</p>
+<p>下面是中兴通讯2012校招笔试题的一道问答题：</p>
+<p>1. <strong>static全局变量与普通的全局变量有什么区别 ?</strong></p>
+<p>　　全局变量(外部变量)的说明之前再冠以static 就构成了静态的全局变量。</p>
+<p>　　全局变量本身就是静态存储方式， 静态全局变量当然也是静态存储方式。 这两者在存储方式上并无不同。</p>
+<p>　　这两者的区别在于非静态全局变量的作用域是整个源程序， 当一个源程序由多个源文件组成时，非静态的全局变量在各个源文件中都是有效的。 而静态全局变量则限制了其作用域， 即只在定义该变量的源文件内有效， 在同一源程序的其它源文件中不能使用它。由于静态全局变量的作用域局限于一个源文件内，只能为该源文件内的函数公用，因此可以避免在其它源文件中引起错误。</p>
+<p>　　static全局变量只初使化一次，防止在其他文件单元中被引用; 　</p>
+<ol start="2">
+<li><p>** static局部变量和普通局部变量有什么区别 ？**</p>
+<p>　　把局部变量改变为静态变量后是改变了它的存储方式即改变了它的生存期。把全局变量改变为静态变量后是改变了它的作用域，限制了它的使用范围。 </p>
+</li>
+</ol>
+<p>　　static局部变量只被初始化一次，下一次依据上一次结果值； 　</p>
+<ol start="3">
+<li>** static函数与普通函数有什么区别？**</li>
+</ol>
+<p>　　 static函数与普通函数作用域不同,仅在本文件。只在当前源文件中使用的函数应该说明为内部函数(static修饰的函数)，内部函数应该在当前源文件中说明和定义。对于可在当前源文件以外使用的函数，应该在一个头文件中说明，要使用这些函数的源文件要包含这个头文件.  </p>
+<h2 id="4-register"><a href="#4-register" class="headerlink" title="4.register"></a>4.register</h2><p>r<strong>egister变量表示将变量存储在CPU内部寄存器中，而不是单纯地寻址访问</strong>，这样可以提高运算速度和效率，</p>
+<p>那么有的同学可能要问，为什么寄存器比寻址访问要快呢？我们首先要知道，<strong>CPU是不会直接和内存打交道的</strong>，他是会通过寄存器跟内存打交道，<strong>数据从内存里拿出来先放到寄存器，然后CPU 再从寄存器里读取数据来处理，处理完后同样把数据通过寄存器存放到内存里，</strong></p>
+<p><strong><a href="https://baike.baidu.com/item/%E5%AF%84%E5%AD%98%E5%99%A8" target="_blank" rel="noopener">寄存器</a>是<a href="https://baike.baidu.com/item/%E5%86%85%E5%AD%98" target="_blank" rel="noopener">内存</a>阶层中的最顶端</strong></p>
+<p>简单来说习大大要处理政务了，那么他是会从各个国家部部长哪里获取信息吧，而不是直接问每个县的县长或者村长获取信息，那么这里CPU就是习大大，通过寄存器(各个国家部门部长)，来对内存进行寻址访问(各个地方的各种事务)，</p>
+<p>正是有着<strong>各种各样各自功能的寄存器(很多部门)</strong>，负责着不同的工作处理，然后汇报给CPU(习大大)，这样程序才能正常进行(国家才能正常运转)，  这样我们可以知道，<strong>寄存器其实就是一块一块小的存储空间，只不过其存取速度要比内存快得多。进水楼台先得月嘛，它离CPU 很近，所以寄存器变量(国家大事)，也就是要优先处理啦。</strong></p>
+<h3 id="注意事项：-1"><a href="#注意事项：-1" class="headerlink" title="注意事项："></a><strong>注意事项：</strong></h3><p>1.<strong>register只是请求寄存器变量，不一定能够成功</strong>，</p>
+<p>我们知道寄存器是有限的(各个部门)，如果定义了很多register变量，可能会超过CPU的寄存器个数，超过容量，(各个部门政务超负载了)<br><strong>这时候就没有办法都变为寄存器变量了，这个数量主要看机器性能决定</strong></p>
+<p><strong>2.register变量必须是能被CPU所接受的类型。</strong></p>
+<p><strong>这通常意味着register变量必须是一个单个的值，并且长度应该小于或者等于整型的长度</strong>。不过，有些机器的寄存器也能存放浮点数。  (这个我们很容易理解，不是什么事都能作为国家大事的)</p>
+<p><strong>3.因为register变量可能不存放在内存中，所以不能用“&amp;”来获取register变量的地址。</strong></p>
+<p><strong>4.用register修饰的变量只能是局部变量，不能是全局变量。CPU的寄存器资源有限，因此不可能让一个变量一直占着CPU寄存器</strong>  (领导人不可能一直只处理一件事情)</p>
+<p><strong>5.register修饰符暗示编译程序相应的变量将被频繁地使用，如果可能的话，应将其保存在CPU的寄存器中，所以请注意，**</strong>.register<strong>仅仅</strong>是暗示而不是命令**。      这就好比寄存器（部长）可以说明这件事比较重要，但是不能直接命令CPU(领导人)去做一件事</p>
+<p><strong>6.局部静态变量不能定义为寄存器变量。不能写成：register static int a, b, c</strong>;</p>
+<p>虽然它被称作最近快的变量，但是也是比较不安全的变量，现在使用不多</p>
+<h2 id="5-const"><a href="#5-const" class="headerlink" title="5.const"></a><strong>5.const</strong></h2><p>我对这个关键字一直抱有敬畏之心，因为之前看过一位某国企面试官对面试者提问const时的博客，就一直感觉很有文章</p>
+<p><strong>简单来说：我们在写程序时，如果需要让一个变量保持不变，不能被修改，那就用const来修饰</strong></p>
+<p>const 是 constant 的缩写，意思是“恒定不变的”！</p>
+<p>以下两种定义是相同的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int a = 6;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int const a = 6;</span><br></pre></td></tr></table></figure>
+
+<p>用 const 定义的变量的值是不允许改变的，即不允许给它重新赋值，即使是赋相同的值也不可以,所以在定义常量的时候要先给他<strong>初始化(赋值)  ，后面任何修改的操作都是错误的</strong></p>
+<h3 id="const和指针"><a href="#const和指针" class="headerlink" title="const和指针"></a><strong>const和指针</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;    const int a;    int const b;    const char \*c;    char \*const d;    const char * const e;    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看上面代码， a和b是相同的  </p>
+<p>对于c来说 const在<em>左边*</em> 表示c所指向的内存地址不可改变，即c只能指向一个固定地址，但是地址中的值是可以修改的**</p>
+<p>对于d来说，<strong>指针是只读的，也就是 d 本身的值不能被修改，但是它所指向的内存空间是可以被修改的。</strong></p>
+<p>对于e来说<strong>，不能做任何修改，</strong></p>
+<p>常量：固定值</p>
+<p>变量：可以变化的量</p>
+<p>我们知道，<strong>数组的长度不能是变量</strong>。虽然 const 定义的是<strong>只读</strong>变量，就相当于是定义一个常量。但是只读变量也是变量，所以 <strong>const 定义的变量仍然不能作为数组的长度</strong></p>
+<p>请注意<strong>只读</strong>这两个字，可以说是精华所在</p>
+<h3 id="能力提升："><a href="#能力提升：" class="headerlink" title="能力提升："></a><strong>能力提升：</strong></h3><p>用 const 修饰的变量，无论是全局变量还是局部变量，生存周期都是程序运行的整个过程。全局变量的生存周期为程序运行的整个过程这个是理所当然的。而使用 const 修饰过的局部变量就有了静态特性，它的生存周期也是程序运行的整个过程。我们知道全局变量是静态的，静态的生存周期就是程序运行的整个过程。但是用const修饰过的局部变量只是有了静态特性，并没有说它变成了静态变量。</p>
+<p>我们知道，局部变量存储在栈中，静态变量存储在静态存储区中，而经过 const 修饰过的变量存储在内存中的“只读数据段”中。只读数据段中存放着常量和只读变量等不可修改的量。</p>
+<p> 有兴趣同学可以参考  <a href="https://blog.csdn.net/as480133937/article/details/87608816" target="_blank" rel="noopener">《单片机的内存分配》</a> </p>
+<p>来学习一下</p>
+<p><strong>都看到这儿了，点个赞再走呗！</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/35548/" title="【c语言】关键字存储类型讲解(auto,extern,static,register,const">http://zxiaoxuan.cn/posts/35548/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言/" rel="tag"><i class="fa fa-tag"></i> C语言</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/690/" rel="next" title="【STM32】STM32 LCD12864 串行通信模式  (从原理让你理解)">
+                <i class="fa fa-chevron-left"></i> 【STM32】STM32 LCD12864 串行通信模式  (从原理让你理解)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/51464/" rel="prev" title="【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别">
+                【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#渣渣C的学习之路"><span class="nav-number">1.</span> <span class="nav-text">渣渣C的学习之路</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#1-extern"><span class="nav-number"></span> <span class="nav-text">1.extern</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项："><span class="nav-number">0.1.</span> <span class="nav-text">注意事项：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-auto"><span class="nav-number"></span> <span class="nav-text">2.*auto   *</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-static"><span class="nav-number"></span> <span class="nav-text">3.static</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-register"><span class="nav-number">1.</span> <span class="nav-text">4.register</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项：-1"><span class="nav-number">1.1.</span> <span class="nav-text">注意事项：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-const"><span class="nav-number">2.</span> <span class="nav-text">5.const</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const和指针"><span class="nav-number">2.1.</span> <span class="nav-text">const和指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能力提升："><span class="nav-number">2.2.</span> <span class="nav-text">能力提升：</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

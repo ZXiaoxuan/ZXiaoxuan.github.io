@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C语言,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="1.定义 花一点时间认真阅读，这篇文章应该会让您多理解一点东西。  1.getchargetchar函数是字符输入函数，其功能是从键盘上获取一个输入字符。 读取方式： 从stdio(输入)流中读字符，相当于getc(stdin），它从标准输入(键盘)里读取下一个字符。，返回值为用户输入的ASCⅡ码，出错返回-1，用户输入的字符被存放在键盘缓冲区中.直到输入回车键才从缓冲区依次提取字符，当用户键入回">
+<meta name="keywords" content="C语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/51464/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="1.定义 花一点时间认真阅读，这篇文章应该会让您多理解一点东西。  1.getchargetchar函数是字符输入函数，其功能是从键盘上获取一个输入字符。 读取方式： 从stdio(输入)流中读字符，相当于getc(stdin），它从标准输入(键盘)里读取下一个字符。，返回值为用户输入的ASCⅡ码，出错返回-1，用户输入的字符被存放在键盘缓冲区中.直到输入回车键才从缓冲区依次提取字符，当用户键入回">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509135241746.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509140847814.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509181224598.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509181824809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509180443497.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509185615200.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509191528597.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509193445565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190509192503241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-09-18T06:52:14.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别">
+<meta name="twitter:description" content="1.定义 花一点时间认真阅读，这篇文章应该会让您多理解一点东西。  1.getchargetchar函数是字符输入函数，其功能是从键盘上获取一个输入字符。 读取方式： 从stdio(输入)流中读字符，相当于getc(stdin），它从标准输入(键盘)里读取下一个字符。，返回值为用户输入的ASCⅡ码，出错返回-1，用户输入的字符被存放在键盘缓冲区中.直到输入回车键才从缓冲区依次提取字符，当用户键入回">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190509135241746.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/51464/">
+
+
+
+
+
+
+
+  <title>【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别 | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/51464/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-18T14:40:31+08:00">
+                2019-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C语言/" itemprop="url" rel="index">
+                    <span itemprop="name">C语言</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/51464/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/51464/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h2><blockquote>
+<p>花一点时间认真阅读，这篇文章应该会让您多理解一点东西。</p>
+</blockquote>
+<h3 id="1-getchar"><a href="#1-getchar" class="headerlink" title="1.getchar"></a>1.getchar</h3><p>getchar函数是字符输入函数，其功能是从键盘上获取<strong>一个输入字符。</strong></p>
+<p><strong>读取方式：</strong></p>
+<p>从stdio(输入)流中读字符，相当于getc(stdin），它从标准输入(键盘)里读取下一个字符。，返回值为用户输入的ASCⅡ码，出错返回-1，用户输入的字符被存放在键盘缓冲区中.<strong>直到输入回车键才从缓冲区依次提取字符</strong>，当用户键入回车之后,getchar会从输入流中读取第一个字符，</p>
+<p><strong>注意：</strong></p>
+<p>1.getchar只能输入一个字符。如果你输入多个字符，它只接受<strong>第一个字符</strong>。</p>
+<p>_2._如果输入流缓冲区中没有数据，那么getchar就会处于等待状态，从而使程序窗口停留。这也是为什么getchar可以作为暂停函数的原因，</p>
+<h3 id="2-scanf"><a href="#2-scanf" class="headerlink" title="2.scanf"></a><strong>2.scanf</strong></h3><p><strong>scanf（）函数</strong>是格式输入函数，即按用户指定的格式从标准输入设备(键盘) 上把数据输入到指定地址的变量中。</p>
+<p><strong>读取方式：</strong></p>
+<p>一般格式为：scanf（格式控制，地址列表）  也就是scanf(“%?”,&amp;?);   可以读取相对于类型的数值并且存储到制定变量，并且可以读取多个数值，如数字，字符，字符串等    </p>
+<p><strong>注意：</strong></p>
+<p><strong>scanf()在读取数字时会跳过空格、制表符和换行符！</strong></p>
+<h3 id="两者区别："><a href="#两者区别：" class="headerlink" title="两者区别："></a>两者区别：</h3><p>1.scanf返回成功赋值项个数，并将数值赋值到指定参数上，而getchar只读取一个字符并返回其ascii码，并且可以赋值也可以不赋值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scanf(&quot;%d&quot;,&amp;a);</span><br><span class="line">getchar();</span><br><span class="line">ch =  getchar();   //两者都正确</span><br></pre></td></tr></table></figure>
+
+<p>2.<strong>结束输入的方式不同</strong></p>
+<p><strong>scanf遇到 回车(enter)，空格，TAB 就会结束一次输入，空格不会接收</strong></p>
+<p><strong>getchar函数只以回车Enter结束输入，接受空格符。</strong></p>
+<p><strong>3.</strong></p>
+<p><strong>scanf在一次输入结束后，不会舍弃最后的回车符（即回车符会残留在缓冲区中）</strong></p>
+<p><strong>getchar回车作为结束的标志，所以在敲回车时’\n’也被存入缓存</strong></p>
+<p><strong>看下面的程序：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;int main()&#123;    char c1,c2;    scanf(&quot;%c %c&quot;,&amp;c1,&amp;c2);   //这里有一个空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);    scanf(&quot;%c%c&quot;,&amp;c1,&amp;c2);    printf(&quot;%d %d\\n&quot;,c1,c2);    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190509135241746.png" alt></p>
+<p>第一次输入a和b正常，没有问题，但是第二次就出现问题了，</p>
+<p>scanf<strong>单字符</strong>输入时规定只接收一个字符，所以第一次输入a  b 时 ，<strong>第一个scanf(“%c %c”）之间有一个空格，所以在输入字符a之后，我们可以输入空格，enter，，scanf都会自动忽略它(那个空格会读取停止字符并释放掉)</strong>，所以第一次输入正常，但它却把<strong>回车符也作为字符对待</strong>的。在我们输入完b之后按回车(Enter)，这个回车符是放在缓冲区的，并且<strong>不会舍弃最后的回车符</strong></p>
+<p>第二次调用scanf(“%c%c”,&amp;c1,&amp;c2);是从缓冲区中取两个字符，首先把第一次调用scanf(“%c%c”,&amp;c1,&amp;c2);后输入的回车当作输入字符赋值给c1 ，之后把a赋值给了c2</p>
+<p>这就在输入逻辑上造成了混乱。</p>
+<p>我们这样改一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;int main()&#123;    char c1,c2;    scanf(&quot;%c %c&quot;,&amp;c1,&amp;c2);   //这里有一个空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);    scanf(&quot; %c %c&quot;,&amp;c1,&amp;c2);   //这里也有了空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190509140847814.png" alt></p>
+<p>这下就会正确了</p>
+<p><strong>scanf(“ %c”,&amp;c)这个空格（换成\n或者\t也可以），这样就把缓冲区中的回车当成第一个字符，读取后丢掉</strong></p>
+<p><strong>可以很好理解：  空格( )即为读取一个结束字符然后丢掉，而普通的字符不受影响</strong></p>
+<p>用好之后可以避免很多程序BUG</p>
+<p>当然我们也可以用<strong>getchar()来把之前的缓冲区里的回车删除掉，而不用 (空格)  这是getchar()的常用用法之一</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;int main()&#123;    char c1,c2;    scanf(&quot;%c %c&quot;,&amp;c1,&amp;c2);   //这里有一个空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);</span><br><span class="line">    getchar();   //吸收回车缓存</span><br><span class="line">    scanf(&quot;%c %c&quot;,&amp;c1,&amp;c2);   //这里也有了空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来一个下方加深理解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;char c1\[10\],c2\[10\];int main()&#123; </span><br><span class="line">	scanf(&quot;%s&quot;,&amp;c1);    printf(&quot;%s\\n&quot;,c1);    scanf(&quot; %s&quot;,&amp;c2);  </span><br><span class="line">    printf(&quot;%s&quot;,c2);    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若输入Hello World！的时候有空格 结果为下方：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190509181224598.png" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/20190509181824809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>输入完Hello World！之后按回车(Enter)直接执行完毕</p>
+<p>因为在你输入Hello World！并且按下Enter(回车)的时候，Hello World！和Enter(回车)都会被送入到输入流缓冲区</p>
+<p>而第一个scanf读取时遇到  空格  直接停止读取，所以c1为Hello   这时候第一个空格被释放</p>
+<p>而第二个scanf继续从输入流缓冲区读取剩下的数据(World！)在读取完！之后有一个Enter(回车) 停止读取，直接执行Printf</p>
+<p>程序运行完毕</p>
+<p>4.<strong>scanf()在读取数字时会跳过空格、回车(Enter)、制表符和换行符！</strong></p>
+<p><strong>getchar函数只能输入字符型,</strong>输入时遇到回车键才从缓冲区依次提取字符。</p>
+<p><strong>看下面的程序：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;int main()&#123;    int c1,c2;    scanf(&quot;%d%d&quot;,&amp;c1,&amp;c2);   //没有空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);    scanf(&quot;%d%d&quot;,&amp;c1,&amp;c2);   //没有空格</span><br><span class="line">    printf(&quot;%d %d\\n&quot;,c1,c2);    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果正常，因为会<strong>自动跳过空格、回车(Enter)来进行读取</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20190509180443497.png" alt></p>
+<h2 id="技能提升："><a href="#技能提升：" class="headerlink" title="技能提升："></a>技能提升：</h2><h3 id="1gets"><a href="#1gets" class="headerlink" title="1gets"></a><strong>1gets</strong></h3><p><strong>gets()以Enter结束输入，但可以接受空格，会舍弃最后的回车符！并且gets()可以读取多个字符，就像%c字符与getchar()对应</strong></p>
+<p><strong>而%s字符串与gets()对称</strong></p>
+<p><strong>需要用getchar()吃掉回车的几种情况：</strong></p>
+<ol>
+<li><p>前面有scanf 后面也要用scanf()时，中间要用一个空的getchar（）吃回车；</p>
+</li>
+<li><p>前面有scanf，后面要用ch=getchar()接收字符时，中间要用一个空的getchar（）吃回车；</p>
+</li>
+<li><p>2个ch=getchar()中间需要一个空的getchar()吃回车。</p>
+</li>
+</ol>
+<h2 id="putchar于printf"><a href="#putchar于printf" class="headerlink" title="putchar于printf"></a>putchar于printf</h2><p>这两个函数其实区别很明显，我们简单介绍下，明天还要交作业。。。i</p>
+<h3 id="1putchar"><a href="#1putchar" class="headerlink" title="1putchar"></a>1putchar</h3><p><strong>1 定义</strong></p>
+<p>putchar(a)向终端输出一个字符。，其中a可以是被单引号）引起来的一个字符[putchar(‘e’)]，可以是介于0~127之间的一个十进制整型数（包含0和127）[putchar(23)] ，也可以是事先用<a href="https://baike.baidu.com/item/char/5156054" target="_blank" rel="noopener">char</a>定义好的一个字符型变量  <strong>并且只能输出单个字符，于getchar()相对应</strong></p>
+<h3 id="2printf"><a href="#2printf" class="headerlink" title="2printf()"></a><strong>2printf()</strong></h3><p><strong>1 定义</strong></p>
+<p>格式化输出函数, 用于向标准输出设备按规定格式输出信息， 并且可以输出各种数据类型，还可以有参数，而putchar只能输出一个字符    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如printf(&quot;%c&quot;,&apos;A&apos;) 相当于 putchar(&apos;A&apos;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a><strong>区别：</strong></h3><p>其实这两个都很容易理解了，并且区别也很明显，这里我们只做下简单讨论</p>
+<p>*<em>1.putchar会有返回值，并且返回值为()内参数值 *</em>转换为的unsigned int 值  如果遇到错误或者文件结束，putchar() 返回EOF</p>
+<p>而printf()函数返回值为字符串的长度。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190509185615200.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a=104;</span><br><span class="line">printf(%d&quot;,a);  //printf将返回3，</span><br><span class="line"></span><br><span class="line">printf(&quot;123\\n&quot;);  //printf将返回4</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="技能提升：-1"><a href="#技能提升：-1" class="headerlink" title="技能提升："></a>技能提升：</h3><p>puts()：只能输出字符串   功能是将字符串输出到屏幕。输出时只有遇到 ‘\0’ 也就是字符串结束标志符才会停止 </p>
+<p>并且puts()在使用完之后会自动换行   等效于printf(“%s\n”,s)</p>
+<p>puts()函数的返回值为0</p>
+<h3 id="习题演练："><a href="#习题演练：" class="headerlink" title="习题演练："></a>习题演练：</h3><p>在学习完之后，就来几道题巩固一下吧！</p>
+<p><img src="https://img-blog.csdnimg.cn/20190509191528597.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>（1） c1与c2字符型与整数型皆可，</p>
+<p>原因： 我们学习知道getchar返回的是字符的ASCⅡ码，而c1，c2若为字符型。则分别对应相对于字符，若为整数型则为对应ASCⅡ码 在用</p>
+<pre><code> printf(&quot;%c  %c\\n&quot;,c1,c2);  
+putchar(c1);  
+putchar(c2);</code></pre><p>输出的时候，字符型直接输出，而整数型的c1，c2 因为是%c和 putchar只能输出字符，会被转换为相对应ASCⅡ码值的字符输出</p>
+<p><img src="https://img-blog.csdnimg.cn/20190509193445565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>（2）应用printf(“%d  %d\n”,c1,c2);  并且c1与c2字符型与整数型皆可</p>
+<p>原因：%d为输出整数型，若 c1,c2为字符型，用%d会输出相对应的ASCⅡ码值，若为整数型直接输出</p>
+<p><img src="https://img-blog.csdnimg.cn/20190509192503241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>（3）不可以</p>
+<p>原因：</p>
+<p>char的范围是ASCII码范围：有符号char   -128 ~ 127 无符号unsigned char ：0 ~ 255</p>
+<p>int的范围是-32768 ~ 32767</p>
+<p>并且字符型为一个字节（无符号的为两个），一个字节转两个没问题，两个转一个就可能出现溢出问题。比如 char a=255,就会溢出，因为有符号字符表达的范围只是-128~127</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/51464/" title="【C语言】C语言学习整理-putchar,printf，getchar，scanf定义及区别">http://zxiaoxuan.cn/posts/51464/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言/" rel="tag"><i class="fa fa-tag"></i> C语言</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/35548/" rel="next" title="【c语言】关键字存储类型讲解(auto,extern,static,register,const">
+                <i class="fa fa-chevron-left"></i> 【c语言】关键字存储类型讲解(auto,extern,static,register,const
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/21849/" rel="prev" title="智能车环岛浅析(电磁+摄像头)">
+                智能车环岛浅析(电磁+摄像头) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-定义"><span class="nav-number">1.</span> <span class="nav-text">1.定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-getchar"><span class="nav-number">1.1.</span> <span class="nav-text">1.getchar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-scanf"><span class="nav-number">1.2.</span> <span class="nav-text">2.scanf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两者区别："><span class="nav-number">1.3.</span> <span class="nav-text">两者区别：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技能提升："><span class="nav-number">2.</span> <span class="nav-text">技能提升：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1gets"><span class="nav-number">2.1.</span> <span class="nav-text">1gets</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#putchar于printf"><span class="nav-number">3.</span> <span class="nav-text">putchar于printf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1putchar"><span class="nav-number">3.1.</span> <span class="nav-text">1putchar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2printf"><span class="nav-number">3.2.</span> <span class="nav-text">2printf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别："><span class="nav-number">3.3.</span> <span class="nav-text">区别：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技能提升：-1"><span class="nav-number">3.4.</span> <span class="nav-text">技能提升：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#习题演练："><span class="nav-number">3.5.</span> <span class="nav-text">习题演练：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

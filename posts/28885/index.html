@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NXP智能车,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。1.otsu（最大类间方差法、大津法）  最大类间方差法是由日本学者大津于1979年提出的,是一种自适应的阈值确定的方法,又叫大津法,简称OTSU。它是按图像的灰度特性,将图像分成背景和目标2部分。背景和目标之间的类间方差越大,说明构">
+<meta name="keywords" content="NXP智能车">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像处理二之----摄像头二值化算法汇总+代码">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/28885/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。1.otsu（最大类间方差法、大津法）  最大类间方差法是由日本学者大津于1979年提出的,是一种自适应的阈值确定的方法,又叫大津法,简称OTSU。它是按图像的灰度特性,将图像分成背景和目标2部分。背景和目标之间的类间方差越大,说明构">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_JTVDbXUlMjAlM0QlMjAlNUNtdTEqJTVDb21lZ2ElMjAxJTIwJnBsdXM7JTIwJTVDbXUyKiU1Q29tZWdhJTIwMg?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_ZyUyMCUzRCUyMCU1Q29tZWdhJTIwMSUyMColMjAlMjglNUNtdSUyMC0lMjAlNUNtdTElMjklNUUlN0IyJTdEJTIwJnBsdXM7JTIwJTVDb21lZ2ElMjAyJTIwKiUyMCUyOCU1Q211JTIwLSUyMCU1Q211MiUyOSU1RSU3QjIlN0Q?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_ZyUyMCUzRCUyMCU1Q29tZWdhJTIwMSUyMColMjAlNUNvbWVnYTIlMjAqJTIwJTI4JTVDbXUxJTIwLSUyMCU1Q211MiUyOSU1RSU3QjIlN0Q?x-oss-process=image/format,png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190402160621543.png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMwLmNuYmxvZ3MuY29tL2Jsb2cvMzQ5MjkzLzIwMTMwOS8wNzEwMTIwOS1jOGU1NWM3NjNlOWE0OTAyODlkOWZlNmQ1OGM3NjdjYi54LXBuZw?x-oss-process=image/format,png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190228101935260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMwLmNuYmxvZ3MuY29tL2Jsb2cvMzQ5MjkzLzIwMTMwOS8wNzExMDU0OC1mY2VhM2ViYjgxODU0MTc1YTU0ZjQ5NDdhOWI2YjhjYi54LXBuZw?x-oss-process=image/format,png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190307174824824.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdn.net/20160524174620833">
+<meta property="og:updated_time" content="2019-09-18T07:25:38.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像处理二之----摄像头二值化算法汇总+代码">
+<meta name="twitter:description" content="上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。1.otsu（最大类间方差法、大津法）  最大类间方差法是由日本学者大津于1979年提出的,是一种自适应的阈值确定的方法,又叫大津法,简称OTSU。它是按图像的灰度特性,将图像分成背景和目标2部分。背景和目标之间的类间方差越大,说明构">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_JTVDbXUlMjAlM0QlMjAlNUNtdTEqJTVDb21lZ2ElMjAxJTIwJnBsdXM7JTIwJTVDbXUyKiU1Q29tZWdhJTIwMg?x-oss-process=image/format,png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/28885/">
+
+
+
+
+
+
+
+  <title>图像处理二之----摄像头二值化算法汇总+代码 | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/28885/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图像处理二之----摄像头二值化算法汇总+代码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-18T14:29:30+08:00">
+                2019-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NXP智能车/" itemprop="url" rel="index">
+                    <span itemprop="name">NXP智能车</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/28885/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/28885/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。"><a href="#上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。" class="headerlink" title="上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。"></a>上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。</h3><h2 id="1-otsu（最大类间方差法、大津法）"><a href="#1-otsu（最大类间方差法、大津法）" class="headerlink" title="1.otsu（最大类间方差法、大津法）"></a>1.otsu（最大类间方差法、大津法）</h2><p>  最大类间方差法是由日本学者大津于1979年提出的,是一种自适应的阈值确定的方法,又叫<strong>大津法,简称OTSU</strong>。它是按图像的灰度特性,将图像分成背景和目标2部分。背景和目标之间的类间方差越大,说明构成图像的2部分的差别越大,当部分目标错分为背景或部分背景错分为目标都会导致2部分差别变小。因此,<strong>使类间方差最大的分割意味着错分概率最小</strong>。</p>
+<p>  阈值将原图象分成前景，背景两个图象。</p>
+<p>  <strong>当取最佳阈值时，背景应该与前景差别最大，关键在于如何选择衡量差别的标准</strong></p>
+<p>而在otsu算法中这个衡量差别的标准就是最大类间方差（英文简称otsu，这也就是这个算法名字的来源）</p>
+<p>对于图像I(x,y),前景(即目标)和背景的分割阈值记作<strong>T</strong>,前景图像占整幅图像的比例记为<strong>ω0</strong>,其平均灰度<strong>μ0</strong>;背景图像占整幅图像的比例为<strong>ω1</strong>,其平均灰度为<strong>μ1</strong>。图像的总平均灰度记为<strong>μ</strong>,类间方差记为<strong>g</strong>。M×N = 像素总数,图像中像素的灰度值小于阈值T的像素个数记作N0,像素灰度大于阈值T的像素个数记作N1</p>
+<p>,则有:<br>　　前景图像占比　　　　ω0=N0/ M×N                                                         (1)<br>　　背景图像占比　　　　ω1=N1/ M×N                                                         (2)<br>　　前景像素+背景像素　　　                        N0+N1=M×N                            (3)<br>　　背景图像+前景图像占比　　　                     　ω0+ω1=1                       （4)<br>　　0~M灰度区间的灰度累计值　　<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_JTVDbXUlMjAlM0QlMjAlNUNtdTEqJTVDb21lZ2ElMjAxJTIwJnBsdXM7JTIwJTVDbXUyKiU1Q29tZWdhJTIwMg?x-oss-process=image/format,png" alt="\mu = \mu1*\omega 1 + \mu2*\omega 2">                          (5)</p>
+<p>　   类间方差值　　　<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_ZyUyMCUzRCUyMCU1Q29tZWdhJTIwMSUyMColMjAlMjglNUNtdSUyMC0lMjAlNUNtdTElMjklNUUlN0IyJTdEJTIwJnBsdXM7JTIwJTVDb21lZ2ElMjAyJTIwKiUyMCUyOCU1Q211JTIwLSUyMCU1Q211MiUyOSU1RSU3QjIlN0Q?x-oss-process=image/format,png" alt="g = \omega 1 * (\mu - \mu1)^{2} + \omega 2 * (\mu - \mu2)^{2}">                                      (6)  </p>
+<p>将式(5)代入式(6),得到等价公式:<br>          <img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9wcml2YXRlLmNvZGVjb2dzLmNvbS9naWYubGF0ZXg_ZyUyMCUzRCUyMCU1Q29tZWdhJTIwMSUyMColMjAlNUNvbWVnYTIlMjAqJTIwJTI4JTVDbXUxJTIwLSUyMCU1Q211MiUyOSU1RSU3QjIlN0Q?x-oss-process=image/format,png" alt="g = \omega 1 * \omega2 * (\mu1 - \mu2)^{2}">                                                                     (7)</p>
+<p>或</p>
+<p><img src="https://img-blog.csdnimg.cn/20190402160621543.png" alt></p>
+<p>采用遍历的方法得到使类间方差最大的阈值T,即为所求。</p>
+<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><h3 id="c代码"><a href="#c代码" class="headerlink" title="c代码"></a>c代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">w0为背景像素点占整幅图像的比例</span><br><span class="line"></span><br><span class="line">u0为w0平均灰度</span><br><span class="line"></span><br><span class="line">w1为前景像素点占整幅图像的比例</span><br><span class="line"></span><br><span class="line">u1为w1平均灰度</span><br><span class="line"></span><br><span class="line">u为整幅图像的平均灰度</span><br><span class="line"></span><br><span class="line">类间方差公式 g = w1 * w2 * (u1 - u2) ^ 2int otsuThreshold(int *image, int col, int row)</span><br><span class="line">&#123;</span><br><span class="line">    #define GrayScale 256</span><br><span class="line">    int width = col;    int height = row;    int pixelCount\[GrayScale\] = &#123;0&#125;; //每个灰度值所占像素个数</span><br><span class="line">    float pixelPro\[GrayScale\] = &#123;0&#125;;//每个灰度值所占总像素比例</span><br><span class="line">    int i, j, pixelSum = width * height;   //总像素</span><br><span class="line">    int threshold = 0;    int* data = image;  //指向像素数据的指针</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //统计灰度级中每个像素在整幅图像中的个数  </span><br><span class="line">    for (i = 0; i &lt; height; i++)</span><br><span class="line">    &#123;        for (j = 0; j &lt; width; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            pixelCount\[(int)data\[i * width + j\]\]++;  //将像素值作为计数数组的下标</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;    //遍历灰度级\[0,255\]  </span><br><span class="line">    float w0, w1, u0tmp, u1tmp, u0, u1, u, deltaTmp, deltaMax = 0;    for (i = 0; i &lt; GrayScale; i++)     // i作为阈值</span><br><span class="line">    &#123;</span><br><span class="line">        w0 = w1 = u0tmp = u1tmp = u0 = u1 = u = deltaTmp = 0;        for (j = 0; j &lt; GrayScale; j++)</span><br><span class="line">        &#123;            if (j &lt;= i)   //背景部分  </span><br><span class="line">            &#123;</span><br><span class="line">                pixelPro\[i\] = (float)pixelCount\[i\] / pixelSum;   //计算每个像素在整幅图像中的比例  </span><br><span class="line">                w0 += pixelPro\[j\];//背景像素点占整个图像的比例</span><br><span class="line">                u0tmp += j * pixelPro\[j\];</span><br><span class="line">            &#125;            else   //前景部分  </span><br><span class="line">            &#123;</span><br><span class="line">                pixelPro\[i\] = (float)pixelCount\[i\] / pixelSum;   //计算每个像素在整幅图像中的比例  </span><br><span class="line">                w1 += pixelPro\[j\];//前景像素点占整个图像的比例</span><br><span class="line">                u1tmp += j * pixelPro\[j\];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        u0 = u0tmp / w0;//背景平均灰度μ0</span><br><span class="line">        u1 = u1tmp / w1;//前景平均灰度μ1</span><br><span class="line">        deltaTmp = (float)(w0 \*w1\* pow((u0 - u1), 2)); //类间方差公式 g = w1 * w2 * (u1 - u2) ^ 2</span><br><span class="line">        if (deltaTmp &gt; deltaMax)</span><br><span class="line">        &#123;</span><br><span class="line">            deltaMax = deltaTmp;</span><br><span class="line">            threshold = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;    return threshold;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MATALB代码："><a href="#MATALB代码：" class="headerlink" title="MATALB代码："></a>MATALB代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">close all;</span><br><span class="line">clear all;</span><br><span class="line">clc;</span><br><span class="line"></span><br><span class="line">input = imread(&apos;R.png&apos;);%读图</span><br><span class="line">input = rgb2gray(input);%灰度转换</span><br><span class="line"></span><br><span class="line">L = 256;%给定灰度级</span><br><span class="line">\[ni, li\] = imhist(input,L);  %ni-各灰度等级出现的次数；li-对应的各灰度等级</span><br><span class="line">% figure,plot(xi,ni);%显示绝对直方图统计</span><br><span class="line">% title(&apos;绝对直方图统计&apos;)</span><br><span class="line"></span><br><span class="line">\[M,N\] = size(input);%获取图像大小</span><br><span class="line">MN = M*N;%像素点总数</span><br><span class="line"></span><br><span class="line">%%Step1 计算归一化直方图</span><br><span class="line"></span><br><span class="line">pi = ni/MN;  %pi-统计各灰度级出现的概率</span><br><span class="line">figure,plot(li,pi);%显示相对直方图统计</span><br><span class="line">title(&apos;相对直方图统计&apos;)</span><br><span class="line"></span><br><span class="line">%%Step2  计算像素被分到C1中的概率P1(k)</span><br><span class="line"></span><br><span class="line">sum = 0;%用来存储各灰度级概率和</span><br><span class="line">P1 = zeros(L,1);%用来存储累积概率和for k = 1:L</span><br><span class="line">    sum = sum +pi(k,1);</span><br><span class="line">    P1(k,1) = sum;%累加概率</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">%%Step3  计算像素至K级的累积均值m(k)</span><br><span class="line"></span><br><span class="line">sum1 = 0;%用来存储灰度均值</span><br><span class="line">m = zeros(L,1);%用来存储累计均值for k = 1:L</span><br><span class="line">    sum1 = sum1+k*pi(k,1);</span><br><span class="line">    m(k,1) = sum1;%累积均值</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">%%Step4  计算全局灰度均值mg</span><br><span class="line"></span><br><span class="line">mg = sum1;</span><br><span class="line"></span><br><span class="line">%%Step5 计算类间方差sigmaB2 </span><br><span class="line">sigmaB2 = zeros(L,1);for k = 1:L    if(P1(k,1) == 0)</span><br><span class="line">        sigmaB2(k,1) = 0;  %为了防止出现NaN    else</span><br><span class="line">        sigmaB2(k,1) = ((mg\*P1(k,1)-m(k,1))^2)/(P1(k,1)\*(1-P1(k,1)));</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">%%Step6 得到最大类间方差以及阈值</span><br><span class="line"></span><br><span class="line">\[MsigmaB2,T\] = max(sigmaB2);%获取最大类间方差MsigmaB2，以及所在位置（即阈值）</span><br><span class="line">output = zeros(M,N);%定义二值化输出图像for i = 1:M    for j = 1:N        if input(i,j)&gt;T</span><br><span class="line">            output(i,j) = 1;        else</span><br><span class="line">            output(i,j)=0;</span><br><span class="line">        end</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line">figure,imshow(output);%显示结果</span><br><span class="line"></span><br><span class="line">%%Step7 可分性度量eta</span><br><span class="line"></span><br><span class="line">sigmaG2 = 0;%全局方差for k = 1:L</span><br><span class="line">    sigmaG2 = sigmaG2+(k-mg)^2*pi(k,1);</span><br><span class="line">end</span><br><span class="line">eta = MsigmaB2/sigmaG2;</span><br></pre></td></tr></table></figure>
+
+<p>或者直接调用MATALB函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">I=imread(&apos;D:\\Images\\pic_loc\\1870405130305041503.jpg&apos;);</span><br><span class="line">a=rgb2gray(I);</span><br><span class="line">level = graythresh(a);</span><br><span class="line">a=im2bw(a,level);</span><br><span class="line">imshow(a,\[\]);</span><br></pre></td></tr></table></figure>
+
+<p>缺陷:OSTU算法在处理光照不均匀的图像的时候，效果会明显不好，因为利用的是全局像素信息。</p>
+<h2 id="2-灰度平局值法："><a href="#2-灰度平局值法：" class="headerlink" title="2.灰度平局值法："></a>2.<strong>灰度平局值法：</strong></h2><p>　**　1、描述:即使用整幅图像的灰度平均值作为二值化的阈值，一般该方法可作为其他方法的初始猜想值。**</p>
+<p><strong>原理：</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMwLmNuYmxvZ3MuY29tL2Jsb2cvMzQ5MjkzLzIwMTMwOS8wNzEwMTIwOS1jOGU1NWM3NjNlOWE0OTAyODlkOWZlNmQ1OGM3NjdjYi54LXBuZw?x-oss-process=image/format,png" alt></p>
+<p>代码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> public static int GetMeanThreshold(int* HistGram)</span><br><span class="line">    &#123;        int Sum = 0, Amount = 0;        for (int Y = 0; Y &lt; 256; Y++)</span><br><span class="line">        &#123;</span><br><span class="line">            Amount += HistGram\[Y\];</span><br><span class="line">            Sum += Y * HistGram\[Y\];</span><br><span class="line">        &#125;        return Sum / Amount;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>缺点：同样受光线影响较大，但是方法简单，处理快</strong></p>
+<h2 id="3-双峰法"><a href="#3-双峰法" class="headerlink" title="3.双峰法"></a><strong>3.双峰法</strong></h2><p>介绍：如果图像灰度直方图呈明显的双峰状，则选取双峰间的最低谷出作为图像分割的阈值所在。，如下图，以<strong>T为阈值</strong>进行二值化分，可以将目标和背景分割开。</p>
+<p>在一些简单的图像中，物体的灰度分布比较有规律，背景与各个目标在图像的直方图各自形成一个波峰，即区域与波峰一一对应，每两个波峰之间形成一个波谷。那么<strong>，选择双峰之间的波谷所代表的灰度值T作为阈值</strong>，即可实现两个区域的分割。如下图所示。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190228101935260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<h3 id="代码实现：-1"><a href="#代码实现：-1" class="headerlink" title="代码实现："></a><strong>代码实现：</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">int GetIntermodesThreshold(int* HistGram)</span><br><span class="line">    &#123;        int Y, Iter = 0, Index;        double* HistGramC = new double\[256\];           // 基于精度问题，一定要用浮点数来处理，否则得不到正确的结果</span><br><span class="line">        double* HistGramCC = new double\[256\];          // 求均值的过程会破坏前面的数据，因此需要两份数据</span><br><span class="line">        for (Y = 0; Y &lt; 256; Y++)</span><br><span class="line">        &#123;</span><br><span class="line">            HistGramC\[Y\] = HistGram\[Y\];</span><br><span class="line">            HistGramCC\[Y\] = HistGram\[Y\];</span><br><span class="line">        &#125;        // 通过三点求均值来平滑直方图</span><br><span class="line">        while (IsDimodal(HistGramCC) == false)                                                  // 判断是否已经是双峰的图像了      </span><br><span class="line">        &#123;</span><br><span class="line">            HistGramCC\[0\] = (HistGramC\[0\] + HistGramC\[0\] + HistGramC\[1\]) / 3;                   // 第一点</span><br><span class="line">            for (Y = 1; Y &lt; 255; Y++)</span><br><span class="line">                HistGramCC\[Y\] = (HistGramC\[Y - 1\] + HistGramC\[Y\] + HistGramC\[Y + 1\]) / 3;       // 中间的点</span><br><span class="line">            HistGramCC\[255\] = (HistGramC\[254\] + HistGramC\[255\] + HistGramC\[255\]) / 3;           // 最后一点</span><br><span class="line">            memcpy(HistGramCC, HistGramC, 256 * sizeof(double));         // 备份数据，为下一次迭代做准备</span><br><span class="line">            Iter++;            if (Iter &gt;= 10000) return -1;                                                       // 似乎直方图无法平滑为双峰的，返回错误代码</span><br><span class="line">        &#125;// 阈值为两峰值的平均值</span><br><span class="line">        int* Peak = new int\[2\];        for (Y = 1, Index = 0; Y &lt; 255; Y++)            if (HistGramCC\[Y - 1\] &lt; HistGramCC\[Y\] &amp;&amp; HistGramCC\[Y + 1\] &lt; HistGramCC\[Y\]) Peak\[Index++\] = Y - 1;        return ((Peak\[0\] + Peak\[1\]) / 2);</span><br><span class="line">    &#125;    bool IsDimodal(double* HistGram)       // 检测直方图是否为双峰的</span><br><span class="line">    &#123;        // 对直方图的峰进行计数，只有峰数位2才为双峰 </span><br><span class="line">        int Count = 0;        for (int Y = 1; Y &lt; 255; Y++)</span><br><span class="line">        &#123;            if (HistGram\[Y - 1\] &lt; HistGram\[Y\] &amp;&amp; HistGram\[Y + 1\] &lt; HistGram\[Y\])</span><br><span class="line">            &#123;</span><br><span class="line">                Count++;                if (Count &gt; 2) return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        if (Count == 2)            return true;        else</span><br><span class="line">            return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Python代码："><a href="#Python代码：" class="headerlink" title="Python代码："></a>Python代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8import cv2import numpy as npfrom matplotlib import pyplot as plt</span><br><span class="line"></span><br><span class="line">image = cv2.imread(&quot;E:/python/cv/2ModeMethod/test.jpg&quot;)</span><br><span class="line">gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">plt.subplot(131), plt.imshow(image, &quot;gray&quot;)</span><br><span class="line">plt.title(&quot;source image&quot;), plt.xticks(\[\]), plt.yticks(\[\])</span><br><span class="line">plt.subplot(132), plt.hist(image.ravel(), 256)</span><br><span class="line">plt.title(&quot;Histogram&quot;), plt.xticks(\[\]), plt.yticks(\[\])</span><br><span class="line">ret1, th1 = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)</span><br><span class="line">plt.subplot(133), plt.imshow(th1, &quot;gray&quot;)</span><br><span class="line">plt.title(&quot;2-Mode Method&quot;), plt.xticks(\[\]), plt.yticks(\[\])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><strong>缺点：当不同区域（即目标）之间的灰度分布有一定的重叠时，双峰法的效果就很差，也就是说，图像为双峰时才能用双峰法</strong></p>
+<p><strong>上述代码已经给出判断双峰图的代码</strong></p>
+<h2 id="4最佳迭代法"><a href="#4最佳迭代法" class="headerlink" title="4最佳迭代法"></a>4最佳迭代法</h2><p>迭代法图像二值化的算法思想是：首先，初始化一个阈值Th，然后按照某种策略通过迭代不断更新这一阈值，直到满足给定的约束条件为止。</p>
+<p>迭代法是基于逼近的思想，迭代阈值的获取步骤可以归纳如下：</p>
+<p>（1）求出图象的最大灰度值和最小灰度值，分别记为gl和gu，令初始阈值为：</p>
+<pre><code>                  ![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMwLmNuYmxvZ3MuY29tL2Jsb2cvMzQ5MjkzLzIwMTMwOS8wNzExMDA1OS01ODQ5YmYzM2IwYjE0NTRkODk0NjkwZGIzODU1YTIwMi54LXBuZw?x-oss-process=image/format,png)
+
+(2) 根据阈值T0将图象分割为前景和背景，分别求出两者的平均灰度值Ab和Af:</code></pre><p>　　        　　　　<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMwLmNuYmxvZ3MuY29tL2Jsb2cvMzQ5MjkzLzIwMTMwOS8wNzExMDU0OC1mY2VhM2ViYjgxODU0MTc1YTU0ZjQ5NDdhOWI2YjhjYi54LXBuZw?x-oss-process=image/format,png" alt></p>
+<pre><code>(3) 令
+
+                    ![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMwLmNuYmxvZ3MuY29tL2Jsb2cvMzQ5MjkzLzIwMTMwOS8wNzExMDcxMS04MDIwZGIyNDRmMTY0OGUyYTM3MjUyM2FmNDkxYzY5Ny54LXBuZw?x-oss-process=image/format,png)</code></pre><p>如果Tk=Tk+1,则取Tk为所求得的阈值，否则，转2继续迭代</p>
+<h2 id="MATALB代码实现："><a href="#MATALB代码实现：" class="headerlink" title="MATALB代码实现："></a>MATALB代码实现：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; clear all</span><br><span class="line"></span><br><span class="line">%读入图像</span><br><span class="line"></span><br><span class="line">I=imread(&apos;D:\\Administrator\\My Pictures\\Lenagray.bmp&apos;);</span><br><span class="line"></span><br><span class="line">%计算灰度的最小值和最大值</span><br><span class="line"></span><br><span class="line">tmin=min(I(:));</span><br><span class="line"></span><br><span class="line">tmax=max(I(:));</span><br><span class="line"></span><br><span class="line">%设定初始阈值</span><br><span class="line"></span><br><span class="line">th=(tmin+tmax)/2;</span><br><span class="line"></span><br><span class="line">%定义开关变量，用于控制循环次数</span><br><span class="line"></span><br><span class="line">ok=true;</span><br><span class="line"></span><br><span class="line">%迭代法计算阈值while ok</span><br><span class="line"></span><br><span class="line">   g1=I&gt;=th;</span><br><span class="line"></span><br><span class="line">   g2=I&lt;=th;</span><br><span class="line"></span><br><span class="line">   u1=mean(I(g1));</span><br><span class="line"></span><br><span class="line">   u2=mean(I(g2));</span><br><span class="line"></span><br><span class="line">   thnew=(u1+u2)/2;</span><br><span class="line"></span><br><span class="line">   %设定两次阈值的比较，当满足小于1时，停止循环</span><br><span class="line"></span><br><span class="line">   ok=abs(th-thnew)&gt;=1;</span><br><span class="line"></span><br><span class="line">   th=thnew;</span><br><span class="line"></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">th=abs(floor(th));</span><br><span class="line"></span><br><span class="line">%阈值分割</span><br><span class="line"></span><br><span class="line">J=im2bw(I,th/255);</span><br><span class="line"></span><br><span class="line">%结果显示</span><br><span class="line"></span><br><span class="line">figure(1);</span><br><span class="line"></span><br><span class="line">imshow(I);title(&apos;原始图像&apos;);</span><br><span class="line"></span><br><span class="line">figure(2);</span><br><span class="line"></span><br><span class="line">str=\[&apos;迭代分割：阈值Th=&apos;,num2str(th)\];</span><br><span class="line"></span><br><span class="line">imshow(J);</span><br><span class="line"></span><br><span class="line">title(str);</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码实现：-2"><a href="#代码实现：-2" class="headerlink" title="代码实现："></a>代码实现：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> public static int GetIterativeBestThreshold(int\[\] HistGram)</span><br><span class="line">    &#123;        int X, Iter = 0;        int MeanValueOne, MeanValueTwo, SumOne, SumTwo, SumIntegralOne, SumIntegralTwo;        int MinValue, MaxValue;        int Threshold, NewThreshold;        for (MinValue = 0; MinValue &lt; 256 &amp;&amp; HistGram\[MinValue\] == 0; MinValue++) ;        for (MaxValue = 255; MaxValue &gt; MinValue &amp;&amp; HistGram\[MinValue\] == 0; MaxValue--) ;        if (MaxValue == MinValue) return MaxValue;          // 图像中只有一个颜色             </span><br><span class="line">        if (MinValue + 1 == MaxValue) return MinValue;      // 图像中只有二个颜色</span><br><span class="line"></span><br><span class="line">        Threshold = MinValue;</span><br><span class="line">        NewThreshold = (MaxValue + MinValue) &gt;&gt; 1;        while (Threshold != NewThreshold)    // 当前后两次迭代的获得阈值相同时，结束迭代    </span><br><span class="line">        &#123;</span><br><span class="line">            SumOne = 0; SumIntegralOne = 0;</span><br><span class="line">            SumTwo = 0; SumIntegralTwo = 0;</span><br><span class="line">            Threshold = NewThreshold;            for (X = MinValue; X &lt;= Threshold; X++)         //根据阈值将图像分割成目标和背景两部分，求出两部分的平均灰度值      </span><br><span class="line">            &#123;</span><br><span class="line">                SumIntegralOne += HistGram\[X\] * X;</span><br><span class="line">                SumOne += HistGram\[X\];</span><br><span class="line">            &#125;</span><br><span class="line">            MeanValueOne = SumIntegralOne / SumOne;            for (X = Threshold + 1; X &lt;= MaxValue; X++)</span><br><span class="line">            &#123;</span><br><span class="line">                SumIntegralTwo += HistGram\[X\] * X;</span><br><span class="line">                SumTwo += HistGram\[X\];</span><br><span class="line">            &#125;</span><br><span class="line">            MeanValueTwo = SumIntegralTwo / SumTwo;</span><br><span class="line">            NewThreshold = (MeanValueOne + MeanValueTwo) &gt;&gt; 1;       //求出新的阈值</span><br><span class="line">            Iter++;            if (Iter &gt;= 1000) return -1;</span><br><span class="line">        &#125;        return Threshold;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5百分比阈值（P-Tile法）"><a href="#5百分比阈值（P-Tile法）" class="headerlink" title="5百分比阈值（P-Tile法）"></a>5<strong>百分比阈值（P-Tile法）</strong></h2><p><strong>p-tile算法是一种基于灰度直方图统计的的自动阈值选择算法，该算法需要基于一定的先验条件—背景与目标所占的面积比P%。<br>该算法选择阈值的原则是，依次累积灰度直方图，直到该累积值大于或等于前景图像（目标）所占面积，此时的灰度级即为所求的阈值</strong></p>
+<h2 id="代码实现：-3"><a href="#代码实现：-3" class="headerlink" title="代码实现："></a>代码实现：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  //HistGram灰度图像的直方图</span><br><span class="line"> //Tile背景在图像中所占的面积百分比</span><br><span class="line">    int GetPTileThreshold(int* HistGram, int Tile)</span><br><span class="line">    &#123;        int Y, Amount = 0, Sum = 0;        for (Y = 0; Y &lt; 256; Y++) Amount += HistGram\[Y\];        //  像素总数</span><br><span class="line">         for (Y = 0; Y &lt; 256; Y++)</span><br><span class="line">        &#123;</span><br><span class="line">            Sum = Sum + HistGram\[Y\];            if (Sum &gt;= Amount * Tile / 100) return Y;</span><br><span class="line">        &#125;        return -1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="缺点：该方法简单高效，但是对于先验概率难于估计的图像却无能为力。。条件很苛刻，大部分情况下都用不上"><a href="#缺点：该方法简单高效，但是对于先验概率难于估计的图像却无能为力。。条件很苛刻，大部分情况下都用不上" class="headerlink" title="缺点：该方法简单高效，但是对于先验概率难于估计的图像却无能为力。。条件很苛刻，大部分情况下都用不上"></a>缺点：该方法简单高效，但是对于先验概率难于估计的图像却无能为力。。条件很苛刻，大部分情况<a href="https://www.baidu.com/s?wd=%E4%B8%8B%E9%83%BD&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">下都</a>用不上</h2><h2 id="6-Niblack二值化算法"><a href="#6-Niblack二值化算法" class="headerlink" title="6.Niblack二值化算法"></a>6.Niblack二值化算法</h2><p>Niblack二值化算法是比较简单的局部阈值方法，阈值的计算公式是T = m + k*v，其中m为以该像素点为中心的区域的平均灰度值，v是该区域的标准差，k是一个修正系数</p>
+<p>它根据以像素点为中心的邻域内的点的情况为此像素计算阈值。下面是每个像素阈值的计算公式，m是均值，s是标准差</p>
+<p><img src="https://img-blog.csdnimg.cn/20190307174824824.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<h3 id="MATALB代码：-1"><a href="#MATALB代码：-1" class="headerlink" title="MATALB代码："></a>MATALB代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">function g=segNiBlack(f,w2,k)</span><br><span class="line">% segmentation method using Niblack thresholding method</span><br><span class="line">% input: w2 is the half width of the window</span><br><span class="line"> </span><br><span class="line">w = 2*w2 + 1;</span><br><span class="line">window = ones(w, w);</span><br><span class="line">% compute sum of pixels in WxW window</span><br><span class="line">sp = conv2(f, window, &apos;same&apos;);</span><br><span class="line">% convert to mean</span><br><span class="line">n = w^2;            % number of pixels in window</span><br><span class="line">m = sp / n;</span><br><span class="line">% compute the stdif k ~= 0</span><br><span class="line">    % compute sum of pixels squared in WxW window</span><br><span class="line">    sp2 = conv2(f.^2, window, &apos;same&apos;);</span><br><span class="line">    % convert to std</span><br><span class="line">    var = (n*sp2 - sp.^2) / n / (n-1);</span><br><span class="line">    s = sqrt(var);  </span><br><span class="line">    % compute Niblack threshold</span><br><span class="line">    t = m + k * s;else</span><br><span class="line">    t = m;</span><br><span class="line">end</span><br><span class="line">g=f&lt;t;</span><br><span class="line"> </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="C代码："><a href="#C代码：" class="headerlink" title="C代码："></a>C代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">void NiBlack(BYTE \*image\_in, BYTE \*image\_out, int xsize, int ysize)&#123;/*////////////////////////////////////////////////////////////////////</span><br><span class="line">// 作者：杨魁</span><br><span class="line">//参数列表：</span><br><span class="line">//image_in            输入图像的指针</span><br><span class="line">//image_out        输出图像的指针</span><br><span class="line">//xsize                图像的宽</span><br><span class="line">//ysize                图像的高</span><br><span class="line">////////////////////////////////////////////////////////////////////*/</span><br><span class="line"> int sum = 0;int i, j, h, k;;//用于循环int Average = 0;//平均值int num = 0;//用于自加int w\_size = 7;//窗口大小为2\*w\_size+1int Area = (2 \* w\_size + 1)*(2 * w\_size + 1);int \*d = (int \*)malloc(sizeof(int)*Area);//数组空间int T = 0;//阈值int S = 0;//标准差</span><br><span class="line"> for (j = w\_size; j &lt; ysize - w\_size; j++)</span><br><span class="line">&#123;    for (i = w\_size; i &lt; xsize - w\_size; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        sum = 0;</span><br><span class="line">        num = 0;        for (h = 0; h &lt; 2 * w_size + 1; h++)</span><br><span class="line">        &#123;            for (k = 0; k &lt; 2 * w_size + 1; k++)</span><br><span class="line">            &#123;</span><br><span class="line">                d\[num++\] = GetGray(image\_in, xsize, i + w\_size - k, j + w_size - h);        //求area领域内的像素值</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        for (h = 0; h &lt;Area; h++)</span><br><span class="line">        &#123;</span><br><span class="line">            sum += d\[h\];//求总和</span><br><span class="line">        &#125;</span><br><span class="line">        Average = sum / Area;</span><br><span class="line">        sum = 0;        for (h = 0; h &lt; Area; h++)</span><br><span class="line">        &#123;</span><br><span class="line">            sum += (d\[h\] * d\[h\]);</span><br><span class="line">        &#125;</span><br><span class="line">        S = sqrt((float)sum);</span><br><span class="line">        S = S / Area;</span><br><span class="line">         T = Average + 0.05*S;//确定阈值</span><br><span class="line">        *(image\_out + j \*xsize + i) = \*(image\_in + j *xsize + i) &gt; T ? 255 : 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;free(d);</span><br></pre></td></tr></table></figure>
+
+<h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">/// &lt;summary&gt;  /// 快速的二维数组元素局部窗口求和程序  /// &lt;/summary&gt;  /// &lt;param name=&quot;array&quot;&gt; 输入二维数组&lt;/param&gt;   /// &lt;param name=&quot;winR&quot;&gt;窗口半径&lt;/param&gt;  /// &lt;returns&gt;输出结果&lt;/returns&gt;  /// &lt;summary&gt;  public static int\[,\] LocalSum_Fast(byte\[,\] array, int winR)  </span><br><span class="line">&#123;  </span><br><span class="line">    int width = array.GetLength(0);  </span><br><span class="line">    int height = array.GetLength(1);  </span><br><span class="line">    int\[,\] temp = new int\[width, height\];//保存中间结果的数组  </span><br><span class="line">    int\[,\] sum = new int\[width, height\];  </span><br><span class="line">  </span><br><span class="line">    //不考虑边界情况，  </span><br><span class="line">    //水平方向：winR行至width-winR行，  </span><br><span class="line">    //垂直方向：winR列至width-winR列  </span><br><span class="line">  </span><br><span class="line">    //对起始行winR在垂直方向求线性和  </span><br><span class="line">    for (int x = winR; x &lt; width - winR; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        for (int k = -winR; k &lt;= winR ; k++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            temp\[x, winR\] += array\[x, winR + k\];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    //从winR+1行至末尾行height-winR，依次基于前一行的求和结果进行计算。  </span><br><span class="line">    for (int y = winR + 1; y &lt; height - winR; y++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        for (int x = winR; x &lt; width - winR; x++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            temp\[x, y\] = temp\[x, y - 1\] + array\[x, y + winR\]   </span><br><span class="line">                         - array\[x, y - 1 - winR\];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    //基于保存的垂直方向求和结果，进行水平方向求和  </span><br><span class="line">    //对起始列winR在水平方向求线性和  </span><br><span class="line">    for (int y = winR; y &lt; height - winR; y++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        for (int k = -winR; k &lt;= winR ; k++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            sum\[winR, y\] += temp\[winR + k, y\];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    //从winR+1列至末尾列height-winR，依次基于前一列的求和结果进行计算。  </span><br><span class="line">    for (int x = winR + 1; x &lt; width - winR; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        for (int y = winR; y &lt; height - winR; y++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            sum\[x, y\] = sum\[x - 1, y\] + temp\[x + winR, y\]   </span><br><span class="line">                        - temp\[x - winR - 1, y\];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    //运算完成，输出求和结果。  </span><br><span class="line">    return sum;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-bernsen二值化"><a href="#7-bernsen二值化" class="headerlink" title="7.bernsen二值化"></a>7.bernsen二值化</h3><p>bernsen算法的中心思想：</p>
+<p>先人为设定两个值S与TT(Bemsen最初设S为15，TT设为128)，计算以图像中任意像素尸为中心的大小为k×k窗口内的所有像素的最大值M与最小值N，两者的均值T，如果朋M-N大于S，则当前P的阈值为T；若小于S，则表示该窗口所在区域灰度级灰度级差别较小，那么窗口在目标区或在背景区，再判断T与TT的关系，若T&gt;TT则当前点灰度值为255，否则当前点灰度值为0。</p>
+<p>改进的bernsen算法：</p>
+<p>1.消除个别灰度特异点，设采用的阈值为T1。</p>
+<p>T1的取值满足：<br><img src="https://img-blog.csdn.net/20160524174620833" alt="这里写图片描述"></p>
+<p>A为图像的总像素个数</p>
+<p>代码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int getThreshBernsen(IplImage *src)</span><br><span class="line">    &#123;</span><br><span class="line">        uchar num\[256\];        int w = src-&gt;width;        int h = src-&gt;height;        int s = src-&gt;widthStep;        int T1 = 0;        int pix = 0;        int a = w * h;        memset(num, 0, 256);        //统计灰度值的个数</span><br><span class="line">        for(int i=0; i&lt;=255; i++)</span><br><span class="line">        &#123;            for(int j=1; j&lt;= h; j++)</span><br><span class="line">            &#123;                for(int m=1; m&lt;= w; m++)</span><br><span class="line">                &#123;                    if(((uchar*)src-&gt;imageData + j*s)\[m\] == i)</span><br><span class="line">                    &#123;</span><br><span class="line">                        num\[i\] = num\[i\] + 1;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;        for(int i=255; i&gt;=0; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            pix = pix + num\[i\];            if(pix &gt;= (0.1*a))</span><br><span class="line">            &#123;</span><br><span class="line">                T1 = i;                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        cout &lt;&lt; T1 &lt;&lt; endl;        return T1;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="二值化的方法有很多，基于每个人来说都会有着适合自己的方法，这里我们只介绍上述几种主流方法，正常使用已经足以，方法不在于多，而在于精，可能你用一种方法就很完美，也可能要不断修改，找到最适合的，图像处理好才是王道。"><a href="#二值化的方法有很多，基于每个人来说都会有着适合自己的方法，这里我们只介绍上述几种主流方法，正常使用已经足以，方法不在于多，而在于精，可能你用一种方法就很完美，也可能要不断修改，找到最适合的，图像处理好才是王道。" class="headerlink" title="二值化的方法有很多，基于每个人来说都会有着适合自己的方法，这里我们只介绍上述几种主流方法，正常使用已经足以，方法不在于多，而在于精，可能你用一种方法就很完美，也可能要不断修改，找到最适合的，图像处理好才是王道。"></a>二值化的方法有很多，基于每个人来说都会有着适合自己的方法，这里我们只介绍上述几种主流方法，正常使用已经足以，方法不在于多，而在于精，可能你用一种方法就很完美，也可能要不断修改，找到最适合的，图像处理好才是王道。</h3><p>参考：</p>
+<p>ttps://<a href="http://www.cnblogs.com/Imageshop/p/3307308.html" target="_blank" rel="noopener">www.cnblogs.com/Imageshop/p/3307308.html</a><br><a href="https://blog.csdn.net/liuzhuomei0911/article/details/51440305" target="_blank" rel="noopener">https://blog.csdn.net/liuzhuomei0911/article/details/51440305</a><br><a href="https://blog.csdn.net/jinzhichaoshuiping/article/details/51480520" target="_blank" rel="noopener">https://blog.csdn.net/jinzhichaoshuiping/article/details/51480520</a><br><a href="https://www.cnblogs.com/naniJser/archive/2012/12/12/2814324.html" target="_blank" rel="noopener">https://www.cnblogs.com/naniJser/archive/2012/12/12/2814324.html</a><br><a href="https://blog.csdn.net/wu\_lian\_nan/article/details/69371720" target="_blank" rel="noopener">https://blog.csdn.net/wu\_lian\_nan/article/details/69371720</a><br><a href="https://blog.csdn.net/zyzhangyue/article/details/45841121" target="_blank" rel="noopener">https://blog.csdn.net/zyzhangyue/article/details/45841121</a></p>
+<p>还有一些参考较少的文献，这里就不罗列了，写这个用到参考文献实在太多，抱歉抱歉</p>
+<p><strong>整理实属不易，点个赞再走呗！</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/28885/" title="图像处理二之----摄像头二值化算法汇总+代码">http://zxiaoxuan.cn/posts/28885/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NXP智能车/" rel="tag"><i class="fa fa-tag"></i> NXP智能车</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/29156/" rel="next" title="Python天气预报查询">
+                <i class="fa fa-chevron-left"></i> Python天气预报查询
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/34132/" rel="prev" title="【STM32】STM32驱动 LCD12864程序代码(串行方式)">
+                【STM32】STM32驱动 LCD12864程序代码(串行方式) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。"><span class="nav-number">1.</span> <span class="nav-text">上一节中我们讲解了什么是二值化，并且讲到了二值化的一般方法，那么每种算法究竟是怎么样对图像经行二值化处理的呢？，算法的原理是什么呢，怎么样用代码实现，这节我们分享下。</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#1-otsu（最大类间方差法、大津法）"><span class="nav-number"></span> <span class="nav-text">1.otsu（最大类间方差法、大津法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现："><span class="nav-number"></span> <span class="nav-text">代码实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c代码"><span class="nav-number">1.</span> <span class="nav-text">c代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MATALB代码："><span class="nav-number">2.</span> <span class="nav-text">MATALB代码：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-灰度平局值法："><span class="nav-number"></span> <span class="nav-text">2.灰度平局值法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-双峰法"><span class="nav-number"></span> <span class="nav-text">3.双峰法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现：-1"><span class="nav-number">1.</span> <span class="nav-text">代码实现：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python代码："><span class="nav-number"></span> <span class="nav-text">Python代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4最佳迭代法"><span class="nav-number"></span> <span class="nav-text">4最佳迭代法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MATALB代码实现："><span class="nav-number"></span> <span class="nav-text">MATALB代码实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现：-2"><span class="nav-number"></span> <span class="nav-text">代码实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5百分比阈值（P-Tile法）"><span class="nav-number"></span> <span class="nav-text">5百分比阈值（P-Tile法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现：-3"><span class="nav-number"></span> <span class="nav-text">代码实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点：该方法简单高效，但是对于先验概率难于估计的图像却无能为力。。条件很苛刻，大部分情况下都用不上"><span class="nav-number"></span> <span class="nav-text">缺点：该方法简单高效，但是对于先验概率难于估计的图像却无能为力。。条件很苛刻，大部分情况下都用不上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Niblack二值化算法"><span class="nav-number"></span> <span class="nav-text">6.Niblack二值化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MATALB代码：-1"><span class="nav-number">1.</span> <span class="nav-text">MATALB代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C代码："><span class="nav-number">2.</span> <span class="nav-text">C代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C"><span class="nav-number">3.</span> <span class="nav-text">C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-bernsen二值化"><span class="nav-number">4.</span> <span class="nav-text">7.bernsen二值化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二值化的方法有很多，基于每个人来说都会有着适合自己的方法，这里我们只介绍上述几种主流方法，正常使用已经足以，方法不在于多，而在于精，可能你用一种方法就很完美，也可能要不断修改，找到最适合的，图像处理好才是王道。"><span class="nav-number">6.</span> <span class="nav-text">二值化的方法有很多，基于每个人来说都会有着适合自己的方法，这里我们只介绍上述几种主流方法，正常使用已经足以，方法不在于多，而在于精，可能你用一种方法就很完美，也可能要不断修改，找到最适合的，图像处理好才是王道。</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

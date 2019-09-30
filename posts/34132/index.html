@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="STM32,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="引言：这里我们只讲解接线和代码实现，具体的原理在上一篇博客中已经讲解，如果想了解具体原理可以查看上一篇博客 《STM32 LCD12864 串行通信模式 (从原理让你理解)》 下方代码的实现也是基于上一篇的讲解顺序来的      设备： STM32F407ZGT6 引脚接线： VSS——GND  VDD——VCC(5V or 3.3V)  V0 亮度调节  不接  CS ——接VCC，持续高电平，">
+<meta name="keywords" content="STM32">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【STM32】STM32驱动 LCD12864程序代码(串行方式)">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/34132/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="引言：这里我们只讲解接线和代码实现，具体的原理在上一篇博客中已经讲解，如果想了解具体原理可以查看上一篇博客 《STM32 LCD12864 串行通信模式 (从原理让你理解)》 下方代码的实现也是基于上一篇的讲解顺序来的      设备： STM32F407ZGT6 引脚接线： VSS——GND  VDD——VCC(5V or 3.3V)  V0 亮度调节  不接  CS ——接VCC，持续高电平，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190726200706356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-09-18T06:32:47.203Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【STM32】STM32驱动 LCD12864程序代码(串行方式)">
+<meta name="twitter:description" content="引言：这里我们只讲解接线和代码实现，具体的原理在上一篇博客中已经讲解，如果想了解具体原理可以查看上一篇博客 《STM32 LCD12864 串行通信模式 (从原理让你理解)》 下方代码的实现也是基于上一篇的讲解顺序来的      设备： STM32F407ZGT6 引脚接线： VSS——GND  VDD——VCC(5V or 3.3V)  V0 亮度调节  不接  CS ——接VCC，持续高电平，">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190726200706356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/34132/">
+
+
+
+
+
+
+
+  <title>【STM32】STM32驱动 LCD12864程序代码(串行方式) | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/34132/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【STM32】STM32驱动 LCD12864程序代码(串行方式)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-18T14:32:46+08:00">
+                2019-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/" itemprop="url" rel="index">
+                    <span itemprop="name">STM32</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/34132/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/34132/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="引言："><a href="#引言：" class="headerlink" title="引言："></a>引言：</h3><p>这里我们只讲解接线和代码实现，具体的原理在上一篇博客中已经讲解，如果想了解具体原理可以查看上一篇博客</p>
+<p><a href="https://blog.csdn.net/as480133937/article/details/97650805" target="_blank" rel="noopener">《STM32 LCD12864 串行通信模式 (从原理让你理解)》</a></p>
+<p>下方代码的实现也是基于上一篇的讲解顺序来的     </p>
+<p><strong>设备： STM32F407ZGT6</strong></p>
+<h3 id="引脚接线："><a href="#引脚接线：" class="headerlink" title="引脚接线："></a>引脚接线：</h3><ol>
+<li><p>VSS——GND</p>
+</li>
+<li><p>VDD——VCC(5V or 3.3V)</p>
+</li>
+<li><p>V0 亮度调节  不接</p>
+</li>
+<li><p>CS ——接VCC，持续高电平，一直选通。</p>
+</li>
+<li><p>SID ——接PE1</p>
+</li>
+<li><p>SCLK  ——接PE0</p>
+</li>
+<li><p>PSB——接GND  串行模式  或者飞线与1脚相连</p>
+</li>
+<li><p>BLA——VCC(5V or 3.3V)   或者飞线与2脚相连</p>
+</li>
+<li><p>BLK——接GND                 或者飞线与1脚相连</p>
+</li>
+<li><p>剩余引脚不接，留空</p>
+</li>
+</ol>
+<p>这样我们最少只会用到4根线  <strong>VCC电源 GND地线  SID串行输入  SCLK  时钟</strong>  便可以实现串行通信</p>
+<h1 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h1><h3 id="LCD写入一个字节："><a href="#LCD写入一个字节：" class="headerlink" title="LCD写入一个字节："></a>LCD写入一个字节：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#define WRITE\_CMD	0xF8//写命令  #define WRITE\_DAT	0xFA//写数据/*! </span><br><span class="line">*  @brief      LCD串行发送一个字节</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  byte   写入字节</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> */void SendByte(u8 byte)&#123;</span><br><span class="line">     u8 i; </span><br><span class="line">	  for(i = 0;i &lt; 8;i++)</span><br><span class="line">    &#123;        if((byte &lt;&lt; i) &amp; 0x80)  //0x80(1000 0000)  只会保留最高位</span><br><span class="line">		&#123;</span><br><span class="line">		    SID = 1;           // 引脚输出高电平，代表发送1</span><br><span class="line">		&#125;		else</span><br><span class="line">		&#123;</span><br><span class="line">			SID = 0;         // 引脚输出低电平，代表发送0</span><br><span class="line">		&#125;		/*或		</span><br><span class="line">		SID =	(Dbyte &lt;&lt; i) &amp; 0x80;</span><br><span class="line">				</span><br><span class="line">		上面那样为了方便理解</span><br><span class="line">		*/</span><br><span class="line">		SCLK = 0;   //时钟线置低  允许SID变化</span><br><span class="line">		delay_us(5); //延时使数据写入</span><br><span class="line">		SCLK = 1;    //拉高时钟，让从机读SID</span><br><span class="line">	&#125;   </span><br><span class="line">&#125;/*! </span><br><span class="line"> *  @brief      LCD写指令</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  Cmd   要写入的指令</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> */void Lcd_WriteCmd(u8 Cmd )&#123;</span><br><span class="line">     delay_ms(1);    //由于我们没有写LCD正忙的检测，所以直接延时1ms，使每次写入数据或指令间隔大于1ms 便可不用写忙状态检测</span><br><span class="line">     SendByte(WRITE_CMD);            //11111,RW(0),RS(0),0   </span><br><span class="line">     SendByte(0xf0&amp;Cmd);      //高四位</span><br><span class="line">     SendByte(Cmd&lt;&lt;4);   //低四位(先执行&lt;&lt;)&#125;/*! </span><br><span class="line"> *  @brief      LCD写数据</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  Dat   要写入的数据</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> */void Lcd_WriteData(u8 Dat )&#123;</span><br><span class="line">     delay_ms(1);     //由于我们没有写LCD正忙的检测，所以直接延时1ms，使每次写入数据或指令间隔大于1ms 便可不用写忙状态检测</span><br><span class="line">     SendByte(WRITE_DAT);            //11111,RW(0),RS(1),0</span><br><span class="line">     SendByte(0xf0&amp;Dat);      //高四位</span><br><span class="line">     SendByte(Dat&lt;&lt;4);   //低四位(先执行&lt;&lt;)&#125;</span><br></pre></td></tr></table></figure>
+
+<p>向LCD发送一个字节，也就是SID引脚相对于高低电平 高电平=1 低电平=0  同时时钟线变化，使得数据可以读取和发送</p>
+<p>结合第一篇原理介绍即可理解。</p>
+<p>关于&amp;运算与&lt;&lt;  参看  <a href="https://blog.csdn.net/as480133937/article/details/88361848" target="_blank" rel="noopener">《C语言运算符与操作符的用法全面汇总(非常有用)》</a></p>
+<h3 id="LCD初始化："><a href="#LCD初始化：" class="headerlink" title="LCD初始化："></a>LCD初始化：</h3><p>这里为了方便移植，将GPIO的初始化与LCD初始化分为两个，使用时根据自己的引脚只修改GPIO初始化即可</p>
+<p><strong>宏定义和GPIO初始化：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#define WRITE\_CMD	0xF8//写命令  #define WRITE\_DAT	0xFA//写数据//接口(SID: PE1  SCLK: PE0) #define SID PEout(1)#define SCLK PEout(0)/*! </span><br><span class="line">*  @brief      GPIO_init</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  None</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> *  使用时自行修改这里的初始化即可</span><br><span class="line"> */void lcd\_GPIO\_init()&#123;</span><br><span class="line">       </span><br><span class="line">  GPIO\_InitTypeDef  GPIO\_InitStructure;</span><br><span class="line"></span><br><span class="line">  RCC\_AHB1PeriphClockCmd(RCC\_AHB1Periph_GPIOE, ENABLE);//使能GPIOE时钟</span><br><span class="line"></span><br><span class="line">  //GPIOE0,E1初始化设置</span><br><span class="line">  GPIO\_InitStructure.GPIO\_Pin = GPIO\_Pin\_0 | GPIO\_Pin\_1;</span><br><span class="line">  GPIO\_InitStructure.GPIO\_Mode = GPIO\_Mode\_OUT;//普通输出模式</span><br><span class="line">  GPIO\_InitStructure.GPIO\_OType = GPIO\_OType\_PP;//推挽输出</span><br><span class="line">  GPIO\_InitStructure.GPIO\_Speed = GPIO\_Speed\_100MHz;//100MHz</span><br><span class="line">  GPIO\_InitStructure.GPIO\_PuPd =  GPIO\_PuPd\_NOPULL;//无上拉</span><br><span class="line">  GPIO\_Init(GPIOE, &amp;GPIO\_InitStructure);//初始化</span><br><span class="line">  SID=1;</span><br><span class="line">  SCLK=1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据不同的型号和管脚修改对应初始化即可</p>
+<p><strong>LCD初始化：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/*! </span><br><span class="line"> *  @brief      LCD初始化</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  None</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> */void Lcd_Init(void)&#123; </span><br><span class="line">    delay_ms(50);   	//等待液晶自检（延时&gt;40ms）</span><br><span class="line">	Lcd_WriteCmd(0x30);        //功能设定:选择基本指令集  ，选择8bit数据流</span><br><span class="line">    delay_ms(1);//延时&gt;137us </span><br><span class="line">    Lcd_WriteCmd(0x0c);        //开显示</span><br><span class="line">    delay_ms(1);	//延时&gt;100us</span><br><span class="line">    Lcd_WriteCmd(0x01);        //清除显示，并且设定地址指针为00H</span><br><span class="line">    delay_ms(30);	//延时&gt;10ms</span><br><span class="line">	Lcd_WriteCmd(0x06);        //每次地址自动+1，初始化完成&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LCD写入字符或汉字："><a href="#LCD写入字符或汉字：" class="headerlink" title="LCD写入字符或汉字："></a>LCD写入字符或汉字：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/* 字符显示RAM地址    4行8列 */uint8\_t LCD\_addr\[4\]\[8\]=&#123;</span><br><span class="line">	&#123;0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87&#125;,  		//第一行</span><br><span class="line">	&#123;0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97&#125;,		//第二行</span><br><span class="line">	&#123;0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F&#125;,		//第三行</span><br><span class="line">	&#123;0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F&#125;		//第四行</span><br><span class="line">	&#125;;/*! </span><br><span class="line"> *  @brief      显示字符或汉字</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  x: row(0~3)</span><br><span class="line"> *  @param  y: line(0~7) </span><br><span class="line"> *  @param 	str: 要显示的字符或汉字</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> */void LCD\_Display\_Words(uint8\_t x,uint8\_t y,uint8_t*str)&#123; </span><br><span class="line">	Lcd\_WriteCmd(LCD\_addr\[x\]\[y\]); //写初始光标位置</span><br><span class="line">	while(*str&gt;0)</span><br><span class="line">    &#123; </span><br><span class="line">      Lcd_WriteData(*str);    //写数据</span><br><span class="line">      str++;     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先写入DDRAM对应初始游标位置，然后在该位置写入字符串 写一个字节之后，DDRAM对应游标地址就自动+1到下一个游标位置继续写，直到字符串空为止</p>
+<h3 id="LCD清屏："><a href="#LCD清屏：" class="headerlink" title="LCD清屏："></a>LCD清屏：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/*! </span><br><span class="line"> *  @brief      清屏函数</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  None</span><br><span class="line"> *  @author     Z小旋</span><br><span class="line"> */void LCD_Clear(void)</span><br><span class="line">	&#123;</span><br><span class="line">		Lcd_WriteCmd(0x01);			//清屏指令</span><br><span class="line">		delay_ms(2);				//延时以待液晶稳定【至少1.6ms】</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LCD显示图片："><a href="#LCD显示图片：" class="headerlink" title="LCD显示图片："></a>LCD显示图片：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/*! </span><br><span class="line"> *  @brief      显示图片</span><br><span class="line"> *  @since      v1.0</span><br><span class="line"> *  @param  *pic   图片地址</span><br><span class="line"> *  @author   </span><br><span class="line"> */void LCD\_Display\_Picture(uint8_t *img)</span><br><span class="line">	&#123;		uint8_t x,y,i;</span><br><span class="line">		Lcd_WriteCmd(0x34);		//切换到扩充指令</span><br><span class="line">		Lcd_WriteCmd(0x34);		//关闭图形显示</span><br><span class="line">		for(i = 0; i &lt; 1; i++)   //上下屏写入</span><br><span class="line">		&#123;			for(y=0;y&lt;32;y++)   //垂直Y写32次</span><br><span class="line">			&#123;  </span><br><span class="line">				for(x=0;x&lt;8;x++)   //横向X写8次</span><br><span class="line">				&#123;</span><br><span class="line">					Lcd_WriteCmd(0x80 + y);		//行地址</span><br><span class="line">					Lcd_WriteCmd(0x80 + x+i);		//列地址</span><br><span class="line">					Lcd_WriteData(*img ++);		//写高位字节数据 D15－D8   </span><br><span class="line">					Lcd_WriteData(*img ++);		//写低位字节数据 D7－D0</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		Lcd_WriteCmd(0x36);//打开图形显示		</span><br><span class="line">		Lcd_WriteCmd(0x30);        //切换回基本指令</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体原理可以结合 LCD图片显示 部分查看</p>
+<p>这里要注意  在显示一幅图片之后，要加上2s左右延时，<strong>否则不会有图片显示</strong></p>
+<p><strong>这里再把显示步骤放在下面，方便理解</strong></p>
+<p><strong>图片显示的步骤</strong></p>
+<p><strong>1切换到扩充指令<br>2 关闭绘图显示功能</strong></p>
+<p><strong>3 先将垂直的坐标(Y)写入CGRAM地址<br>4 再将水平的位元组坐标(X)写入CGRAM地址<br>5 将高位字节D15－D8写入RAM中<br>6 将低位字节D7－D0写入到RAM中</strong></p>
+<p><strong>重复3-6步，完成图片各个部分的写入  先写上半屏，再写下半屏</strong></p>
+<p><strong>7 打开绘图显示功能                                                                                                                                                                          8切换回基本指令</strong></p>
+<p>使用图片取模软件时要注意 <strong>图片取模方式：横向取模，字节正序</strong></p>
+<p>到此基本的功能都已经实现了，我把完整的工程代码放到下面，有需要的可以自行下载查看</p>
+<p>弄到百度云了，CSDN下载还要钱。。。</p>
+<p>链接: <a href="https://pan.baidu.com/s/1_OabL-e2mgZebKjjFnW1Ow" target="_blank" rel="noopener">https://pan.baidu.com/s/1_OabL-e2mgZebKjjFnW1Ow</a> 提取码: tfxw </p>
+<p>github：    <a href="https://github.com/ZXiaoxuan/STM32-LCD12864/tree/ZXiaoxuan" target="_blank" rel="noopener">https://github.com/ZXiaoxuan/STM32-LCD12864/tree/ZXiaoxuan</a></p>
+<p>至此，LCD12864完毕，</p>
+<p><img src="https://img-blog.csdnimg.cn/20190726200706356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>PS: <strong>代码没有任何问题</strong>，直接修改GPIO初始化部分即可，如果亮不了，先自行检查，还有查看评论区，看下自己是否有相同问题(供电，接线，F1与F4GPIO初始化不同…等等)，不行就在评论区留言,我看到都会回复帮您解决</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/34132/" title="【STM32】STM32驱动 LCD12864程序代码(串行方式)">http://zxiaoxuan.cn/posts/34132/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STM32/" rel="tag"><i class="fa fa-tag"></i> STM32</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/28885/" rel="next" title="图像处理二之----摄像头二值化算法汇总+代码">
+                <i class="fa fa-chevron-left"></i> 图像处理二之----摄像头二值化算法汇总+代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/690/" rel="prev" title="【STM32】STM32 LCD12864 串行通信模式  (从原理让你理解)">
+                【STM32】STM32 LCD12864 串行通信模式  (从原理让你理解) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言："><span class="nav-number">1.</span> <span class="nav-text">引言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引脚接线："><span class="nav-number">2.</span> <span class="nav-text">引脚接线：</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现："><span class="nav-number"></span> <span class="nav-text">代码实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LCD写入一个字节："><span class="nav-number">1.</span> <span class="nav-text">LCD写入一个字节：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCD初始化："><span class="nav-number">2.</span> <span class="nav-text">LCD初始化：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCD写入字符或汉字："><span class="nav-number">3.</span> <span class="nav-text">LCD写入字符或汉字：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCD清屏："><span class="nav-number">4.</span> <span class="nav-text">LCD清屏：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCD显示图片："><span class="nav-number">5.</span> <span class="nav-text">LCD显示图片：</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

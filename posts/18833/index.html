@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("http://zxiaoxuan.cn"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="STM32,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Z小旋" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言：本系列教程将外设原理，HAL库与STM32CubeMX结合在一起讲解，使您可以更快速的学会各个模块的使用 所用工具： 1、芯片： STM32F407ZET6/STM32F103ZET6 2、STM32CubeMx软件 3、IDE： MDK-Keil软件 4、STM32F1xx/STM32F4xxHAL库  5 知识概括： 通过本篇博客您将学到： SMT32定时器输入捕获  测量PWM频率和占">
+<meta name="keywords" content="STM32">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获">
+<meta property="og:url" content="http://zxiaoxuan.cn/posts/18833/index.html">
+<meta property="og:site_name" content="Z小旋">
+<meta property="og:description" content="前言：本系列教程将外设原理，HAL库与STM32CubeMX结合在一起讲解，使您可以更快速的学会各个模块的使用 所用工具： 1、芯片： STM32F407ZET6/STM32F103ZET6 2、STM32CubeMx软件 3、IDE： MDK-Keil软件 4、STM32F1xx/STM32F4xxHAL库  5 知识概括： 通过本篇博客您将学到： SMT32定时器输入捕获  测量PWM频率和占">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190813094532466.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20180419215648175">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190813111456218.png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvMTIwNzU3Ni8yMDE4MDUvMTIwNzU3Ni0yMDE4MDUxMzE2MzY1OTkxOC04NzQ4NDYxNTIucG5n">
+<meta property="og:image" content="https://img-blog.csdn.net/20180419213733338">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190810145615696.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019081117400555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190813120324793.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190813152340197.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190811193124463.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019080921100765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190809172359875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190813171232499.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190813171323391.png">
+<meta property="og:updated_time" content="2019-09-30T13:48:33.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获">
+<meta name="twitter:description" content="前言：本系列教程将外设原理，HAL库与STM32CubeMX结合在一起讲解，使您可以更快速的学会各个模块的使用 所用工具： 1、芯片： STM32F407ZET6/STM32F103ZET6 2、STM32CubeMx软件 3、IDE： MDK-Keil软件 4、STM32F1xx/STM32F4xxHAL库  5 知识概括： 通过本篇博客您将学到： SMT32定时器输入捕获  测量PWM频率和占">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190813094532466.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zxiaoxuan.cn/posts/18833/">
+
+
+
+
+
+
+
+  <title>【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获 | Z小旋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Z小旋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zxiaoxuan.cn/posts/18833/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zxiaoxuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z小旋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T00:00:00+08:00">
+                2019-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/" itemprop="url" rel="index">
+                    <span itemprop="name">STM32</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/18833/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/18833/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>本系列教程将<strong>外设原理，HAL库与STM32CubeMX结合在一起讲解</strong>，使您可以更快速的学会各个模块的使用</p>
+<p><strong>所用工具：</strong></p>
+<p>1、芯片： STM32F407ZET6/STM32F103ZET6</p>
+<p>2、STM32CubeMx软件</p>
+<p>3、IDE： MDK-Keil软件</p>
+<p>4、STM32F1xx/STM32F4xxHAL库 </p>
+<p>5</p>
+<p><strong>知识概括：</strong></p>
+<p>通过本篇博客您将学到：</p>
+<p>SMT32定时器输入捕获</p>
+<p> 测量PWM频率和占空比</p>
+<h1 id="输入捕获"><a href="#输入捕获" class="headerlink" title="输入捕获"></a>输入捕获</h1><h3 id="输入捕获概念"><a href="#输入捕获概念" class="headerlink" title="输入捕获概念"></a><strong>输入捕获概念</strong></h3><p>输入捕获模式可以用来测量脉冲宽度或者测量频率。STM32的定时器，除了TIM6、TIM7，其他的定时器都有输入捕获的功能。</p>
+<p>具体请参看<a href="https://blog.csdn.net/as480133937/article/details/99201209" target="_blank" rel="noopener">《【STM32】HAL库 STM32CubeMX教程六—-定时器中断》</a></p>
+<h3 id="输入捕获的工作原理"><a href="#输入捕获的工作原理" class="headerlink" title="输入捕获的工作原理"></a>输入捕获的工作原理</h3><p><img src="https://img-blog.csdnimg.cn/20190813094532466.png" alt></p>
+<p>①先设置输入捕获为上升沿检测，</p>
+<p>②记录发生上升沿时TIMx_CNT(计数器)的值</p>
+<p>③配置捕获信号为下降沿捕获，当下降沿到来的时候发生捕获</p>
+<p>④记录此时的TIMx_CN(计数器)T的值</p>
+<p>⑤前后两次TIMx_CNT(计数器)的值之差就是高电平的脉宽。同时根据TIM的计数频率，我们就能知道高电平脉宽的准确时间。</p>
+<p>简单说：</p>
+<p><strong>当你设置的捕获开始的时候，cpu会将计数寄存器的值复制到捕获比较寄存器中并开始计数，当再次捕捉到电平变化时，这是计数寄存器中的值减去刚才复制的值就是这段电平的持续时间，你可以设置上升沿捕获、下降沿捕获、或者上升沿下降沿都捕获，</strong></p>
+<h3 id="输入捕获的工作流程-对应CubeMx的四个选项"><a href="#输入捕获的工作流程-对应CubeMx的四个选项" class="headerlink" title="输入捕获的工作流程(对应CubeMx的四个选项)"></a>输入捕获的工作流程(对应CubeMx的四个选项)</h3><p><img src="https://img-blog.csdn.net/20180419215648175" alt></p>
+<h3 id="设置输入捕获滤波器"><a href="#设置输入捕获滤波器" class="headerlink" title="设置输入捕获滤波器"></a>设置输入捕获滤波器</h3><p>STM32在很多功能中都提供了滤波器，滤波器的功能简单来说就是<strong>多次检测视为一次有效，达到滤波效果，</strong></p>
+<p>数字滤波器由一个事件计数器组成，假设我们是检测高电平，滤波N次，那么记录到N个事件后计数器会产生一个输出的跳变。也就是说连续N次采样检测，如果都是高电平，则说明这是一个有效的电平信号，这样便可以过滤掉那些因为某些而干扰产生的一些信号        </p>
+<p><strong>输入捕获滤波器IC1F[3:0]，这个用于设置采样频率和数字滤波器长度</strong>。其中：fCK_INT是定时器的输入频率，fDTS是根据TIMx_CR1的CKD[1:0]的设置来确定的。</p>
+<h3 id="设置输入捕获极性"><a href="#设置输入捕获极性" class="headerlink" title="设置输入捕获极性"></a>设置输入捕获极性</h3><p><strong>设置具体为那种</strong>捕获事件</p>
+<p><strong>可以设置上升沿捕获、下降沿捕获、或者上升沿下降沿都捕获</strong></p>
+<h3 id="设置输入捕获映射关系"><a href="#设置输入捕获映射关系" class="headerlink" title="设置输入捕获映射关系"></a>设置输入捕获映射关系</h3><p>STM32为了更好的优化使用，TIMx_CH1通道1捕捉到的信号可以传输到IC1，TIMx_CH1捕捉到的信号也可以连接到IC2，TIMx_CH2捕捉到的信号也可以连接到IC2，也可以连接到IC2</p>
+<p><img src="https://img-blog.csdnimg.cn/20190813111456218.png" alt></p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="设置输入捕获分频器"><a href="#设置输入捕获分频器" class="headerlink" title="设置输入捕获分频器"></a>设置输入捕获分频器</h3><p>设置<strong>每N个事件触发一次捕获**</strong>，可以设置为1/2/4/8次检测到电平变化才触发捕获**</p>
+<h3 id="溢出时间计算："><a href="#溢出时间计算：" class="headerlink" title="溢出时间计算："></a>溢出时间计算：</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvMTIwNzU3Ni8yMDE4MDUvMTIwNzU3Ni0yMDE4MDUxMzE2MzY1OTkxOC04NzQ4NDYxNTIucG5n" alt></p>
+<p>t1时刻检测到高电平，发生中断，在中断里将计数值置0，开始记溢出次数N，</p>
+<p>其中每计数0xFFFF次溢出一次，直到t2时刻跳变回低电平，</p>
+<p>获取最后一次溢出时到t2时刻的计数值TIM5CH1_CAPTURE_VAL</p>
+<p>则 ** 高电平时间 = 溢出次数<em>65535+TIM5CH1_CAPTURE_VAL     us*</em> ；根据定时器初始化时的频率即可计算出溢出总次数所占用的时间，即为高电平时间。</p>
+<p>如果计数器值为 <strong>32 bit</strong>  那么最大为0xFFFFFFFF      </p>
+<p><strong>高电平时间：</strong></p>
+<pre><code>![](https://img-blog.csdnimg.cn/20190813172958716.png)</code></pre><h3 id="输入捕获的工作框图"><a href="#输入捕获的工作框图" class="headerlink" title="输入捕获的工作框图"></a>输入捕获的工作框图</h3><p><img src="https://img-blog.csdn.net/20180419213733338" alt></p>
+<h3 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h3><p><strong>设置RCC</strong></p>
+<p><strong>设置高速外部时钟HSE 选择外部时钟源</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20190810145615696.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p><strong>2设置时钟</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/2019081117400555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>*<em>我的是  外部晶振为8MHz *</em></p>
+<ul>
+<li><p>*<em>1选择外部时钟HSE 8MHz   *</em></p>
+</li>
+<li><p><strong>2PLL锁相环倍频72倍</strong></p>
+</li>
+<li><p><strong>3系统时钟来源选择为PLL</strong></p>
+</li>
+<li><p><strong>4设置APB1分频器为 /2</strong></p>
+</li>
+<li><p><strong>5 这时候定时器的时钟频率为72Mhz</strong></p>
+</li>
+</ul>
+<p><strong>32的时钟树框图</strong>  如果不懂的话请看<a href="https://blog.csdn.net/as480133937/article/details/98845509" target="_blank" rel="noopener">《【STM32】系统时钟RCC详解(超详细，超全面)》</a></p>
+<p><strong>3定时器配置</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20190813120324793.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p>这里我们选择TIM5的通道1</p>
+<ul>
+<li><p>预分频系数为71   计数时钟频率就是 72MHz/(71+1) = 1MHz        此时<strong>1us</strong>计数一次</p>
+</li>
+<li><p>自动加载值设置为32bit最大值  0xFFFFFFFF          </p>
+</li>
+<li><p><strong>上升沿捕获</strong></p>
+</li>
+<li><p>不分频</p>
+</li>
+<li><p>滤波值为8</p>
+</li>
+</ul>
+<p><strong>同时在NVIC一栏使能TIM5的中断</strong></p>
+<p><strong>对应引脚设置下拉电阻</strong>，保证没有信号输入的时候电平稳定</p>
+<p><img src="https://img-blog.csdnimg.cn/20190813152340197.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p><strong>4项目文件设置</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20190811193124463.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt>          </p>
+<ul>
+<li><p>1 设置项目名称</p>
+</li>
+<li><p>2 设置存储路径</p>
+</li>
+<li><p>3 选择所用IDE</p>
+</li>
+</ul>
+<p>   <img src="https://img-blog.csdnimg.cn/2019080921100765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></p>
+<p><strong>5创建工程文件</strong></p>
+<p>然后点击*<em>GENERATE CODE  *</em>创建工程</p>
+<h3 id="配置下载工具"><a href="#配置下载工具" class="headerlink" title="配置下载工具"></a>配置下载工具</h3><p>新建的工程所有配置都是默认的  我们需要自行选择下载模式，勾选上下载后复位运行</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a><img src="https://img-blog.csdnimg.cn/20190809172359875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FzNDgwMTMzOTM3,size_16,color_FFFFFF,t_70" alt></h3><h3 id="例程实现："><a href="#例程实现：" class="headerlink" title="例程实现："></a>例程实现：</h3><p>定义变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* USER CODE BEGIN 0 */    uint32\_t capture\_Buf\[3\] = &#123;0&#125;;   //存放计数值    uint8\_t capture\_Cnt = 0;    //状态标志位    uint32\_t high\_time;   //高电平时间/* USER CODE END 0 */</span><br></pre></td></tr></table></figure>
+
+<p>在 while(1)中的用户代码区 3，写入TIM2 CH1通道的输入捕获控制和数据处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">while (1)</span><br><span class="line">&#123;    /* USER CODE END WHILE */</span><br><span class="line"></span><br><span class="line">    /* USER CODE BEGIN 3 */</span><br><span class="line">  switch (capture_Cnt)&#123;	case 0:</span><br><span class="line">		capture_Cnt++;</span><br><span class="line">		\_\_HAL\_TIM\_SET\_CAPTUREPOLARITY(&amp;htim5, TIM\_CHANNEL\_1, TIM\_INPUTCHANNELPOLARITY\_RISING);</span><br><span class="line">		HAL\_TIM\_IC\_Start\_IT(&amp;htim5, TIM\_CHANNEL\_1);	//启动输入捕获       或者: \_\_HAL\_TIM_ENABLE(&amp;htim5);</span><br><span class="line">		break;	case 3:</span><br><span class="line">		high\_time = capture\_Buf\[1\]- capture_Buf\[0\];    //高电平时间</span><br><span class="line">		HAL\_UART\_Transmit(&amp;huart1, (uint8\_t *)high\_time, 1, 0xffff);   //发送高电平时间</span><br><span class="line">				</span><br><span class="line">				</span><br><span class="line">		HAL_Delay(1000);   //延时1S</span><br><span class="line">		capture_Cnt = 0;  //清空标志位</span><br><span class="line">		break;</span><br><span class="line">				</span><br><span class="line">	&#125;</span><br><span class="line">&#125;/* USER CODE END 3 */</span><br></pre></td></tr></table></figure>
+
+<p>在main函数下方添加中断回调函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/* USER CODE BEGIN 4 */void HAL\_TIM\_IC\_CaptureCallback(TIM\_HandleTypeDef *htim)&#123;	</span><br><span class="line">	if(TIM5 == htim-&gt;Instance)</span><br><span class="line">	&#123;		switch(capture_Cnt)&#123;			case 1:</span><br><span class="line">				capture\_Buf\[0\] = HAL\_TIM\_ReadCapturedValue(&amp;htim5,TIM\_CHANNEL_1);//获取当前的捕获值.</span><br><span class="line">				\_\_HAL\_TIM\_SET\_CAPTUREPOLARITY(&amp;htim5,TIM\_CHANNEL\_1,TIM\_ICPOLARITY\_FALLING);  //设置为下降沿捕获</span><br><span class="line">				capture_Cnt++;				break;			case 2:</span><br><span class="line">				capture\_Buf\[1\] = HAL\_TIM\_ReadCapturedValue(&amp;htim5,TIM\_CHANNEL_1);//获取当前的捕获值.</span><br><span class="line">				HAL\_TIM\_IC\_Stop\_IT(&amp;htim5,TIM\_CHANNEL\_1); //停止捕获   或者: \_\_HAL\_TIM_DISABLE(&amp;htim5);</span><br><span class="line">				capture_Cnt++;    </span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;/* USER CODE END 4 */</span><br></pre></td></tr></table></figure>
+
+<p>具体流程：</p>
+<p>1.设置TIM5 CH1为输入捕获功能；  </p>
+<p>2.设置上升沿捕获； </p>
+<p>3.使能TIM2 CH1捕获功能；  </p>
+<p>4.捕获到上升沿后，定时器当前计数值存入capture_buf[0]，改为捕获下降沿；   </p>
+<p> 5.捕获到下降沿后，定时器当前计数值存入存入capture_buf[1]，关闭TIM2 CH1捕获功能；  capture_Cnt=3；</p>
+<ol start="6">
+<li>高电平时间： capture_buf[1] - capture_buf[0]        发送到上位机  重新启动输入捕获</li>
+</ol>
+<p><strong>__HAL_TIM_SET_COUNTER(&amp;TIM5_Handler,0);</strong>   //设置计数寄存器的值变为0</p>
+<p><strong>HAL_TIM_PWM_Start</strong>()              函数用于使能定时器某一通道的PWM输出。</p>
+<p><strong>HAL_TIM_IC_Start_IT</strong>()                  函数用于使能定时器某一通道的输入捕获功能，并使能相应的中断</p>
+<p><strong>HAL_TIM_IC_Stop_IT</strong>()                 函数和开启功能相反，是关闭定时器某一通道的输入捕获功能和相应中断</p>
+<p><strong>__HAL_TIM_SET_CAPTUREPOLARITY</strong>不是函数，而是底层操作的一个宏定义</p>
+<p>在stm32f4xx_hal_tim.h文件中可以找到。其作用是修改定时器某一通道的输入捕获极性</p>
+<p><img src="https://img-blog.csdnimg.cn/20190813171232499.png" alt></p>
+<p>其中有两个函数，第一个为清除<strong>清除原来的捕获极性</strong>，第二个为设置<strong>通道捕捉极性</strong></p>
+<p><strong>等价于：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TIM\_RESET\_CAPTUREPOLARITY(&amp;TIM5\_Handler,TIM\_CHANNEL\_1);   //一定要先清除原来的捕获极性！！TIM\_SET\_CAPTUREPOLARITY(&amp;TIM5\_Handler,TIM\_CHANNEL\_1,TIM\_ICPOLARITY\_FALLING);//定时器5通道1设置为下降沿捕获（重设捕获极性）</span><br></pre></td></tr></table></figure>
+
+<p><strong>在修改定时器某一通道的输入捕获极性时，一定要先清除该通道之前捕获极性</strong></p>
+<p><strong>__HAL_TIM_GET_COMPARE</strong>也是一个宏定义。 <br>在stm32f4xx_hal_tim.h文件中可以找到。其作用是获取定时器某一通道的捕获/比较寄存器值</p>
+<p><img src="https://img-blog.csdnimg.cn/20190813171323391.png" alt></p>
+<p><strong>等价于 ：  HAL_TIM_ReadCapturedValue(&amp;htim5,TIM_CHANNEL_1);</strong></p>
+<p>  两者都是直接读取对应CCRx寄存器的值</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zxiaoxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zxiaoxuan.cn/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获">http://zxiaoxuan.cn/posts/18833/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+ <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+ </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STM32/" rel="tag"><i class="fa fa-tag"></i> STM32</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/52363/" rel="next" title="【STM32】系统时钟RCC详解(超详细，超全面)">
+                <i class="fa fa-chevron-left"></i> 【STM32】系统时钟RCC详解(超详细，超全面)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/62824/" rel="prev" title="【c语言】宏">
+                【c语言】宏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zxiaoxuan">
+            
+              <p class="site-author-name" itemprop="name">Zxiaoxuan</p>
+              <p class="site-description motion-element" itemprop="description">让自己变得优秀，才能遇见更优秀的人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZXiaoxuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/as480133937" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-google"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+			
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/31100/" title="基于MT9V032的障碍识别功能" target="_blank">基于MT9V032的障碍识别功能</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/62824/" title="【c语言】宏" target="_blank">【c语言】宏</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/18833/" title="【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获" target="_blank">【STM32】HAL库 STM32CubeMX教程八---定时器输入捕获</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/52363/" title="【STM32】系统时钟RCC详解(超详细，超全面)" target="_blank">【STM32】系统时钟RCC详解(超详细，超全面)</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/posts/51504/" title="【STM32】 定时器---正交解码编码器模式详解" target="_blank">【STM32】 定时器---正交解码编码器模式详解</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#输入捕获"><span class="nav-number"></span> <span class="nav-text">输入捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入捕获概念"><span class="nav-number">1.</span> <span class="nav-text">输入捕获概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入捕获的工作原理"><span class="nav-number">2.</span> <span class="nav-text">输入捕获的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入捕获的工作流程-对应CubeMx的四个选项"><span class="nav-number">3.</span> <span class="nav-text">输入捕获的工作流程(对应CubeMx的四个选项)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置输入捕获滤波器"><span class="nav-number">4.</span> <span class="nav-text">设置输入捕获滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置输入捕获极性"><span class="nav-number">5.</span> <span class="nav-text">设置输入捕获极性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置输入捕获映射关系"><span class="nav-number">6.</span> <span class="nav-text">设置输入捕获映射关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置输入捕获分频器"><span class="nav-number">8.</span> <span class="nav-text">设置输入捕获分频器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#溢出时间计算："><span class="nav-number">9.</span> <span class="nav-text">溢出时间计算：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入捕获的工作框图"><span class="nav-number">10.</span> <span class="nav-text">输入捕获的工作框图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工程创建"><span class="nav-number">11.</span> <span class="nav-text">工程创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置下载工具"><span class="nav-number">12.</span> <span class="nav-text">配置下载工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">13.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例程实现："><span class="nav-number">14.</span> <span class="nav-text">例程实现：</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>	
+	  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+    
+		</div>
+  </aside>
+
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zxiaoxuan</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: '2a7RMNuRb0cQvAoyypTwCdct-MdYXbMMI',
+        appKey: 'oVs4fFeu95kWGC9wmRt4LKyF',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '欢迎评论！',
+  });
+  </script>
+
+
+
+
+
+  
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
